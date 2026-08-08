@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vfactor Solutions — Recruitment, RPO & Lead Generation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D;
+    --ink-soft:#3A4664;
+    --paper:#F7F5EE;
+    --paper-raised:#FFFFFF;
+    --brass:#A9822C;
+    --brass-deep:#7A5D1E;
+    --teal:#1F4B4B;
+    --line:#DAD5C6;
+    --line-strong:#C2BCA8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* ring signature element */
+  .ring{
+    display:inline-block;width:9px;height:9px;border-radius:50%;
+    border:1.5px solid var(--brass);position:relative;flex-shrink:0;
+  }
+  .ring::after{
+    content:"";position:absolute;inset:-5px;border:1px solid var(--line-strong);border-radius:50%;
+  }
+
+  /* header */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(247,245,238,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1120px;margin:0 auto;}
+  .brand{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:.01em;}
+  .brand span{color:var(--brass);}
+  .navlinks{display:flex;gap:28px;font-size:14px;color:var(--ink-soft);}
+  .navlinks a:hover{color:var(--ink);}
+  .nav-cta{
+    font-size:13px;font-weight:600;border:1px solid var(--ink);padding:8px 16px;border-radius:2px;
+  }
+  .nav-cta:hover{background:var(--ink);color:var(--paper);}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;padding:96px 0 100px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  .hero h1{font-size:52px;line-height:1.08;letter-spacing:-.01em;margin:18px 0 24px;}
+  .hero h1 em{font-style:italic;color:var(--brass-deep);}
+  .hero p.lede{font-size:18px;color:var(--ink-soft);max-width:46ch;margin-bottom:34px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-size:14px;font-weight:600;padding:13px 22px;border-radius:2px;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{background:var(--teal);}
+  .btn{transition:transform .15s ease,background .15s ease,border-color .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line-strong);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .target{width:100%;max-width:420px;justify-self:center;}
+  .target circle{fill:none;stroke:var(--line-strong);}
+  .target .c1{stroke:var(--brass);stroke-width:1.4;}
+  .target .dot{fill:var(--brass-deep);}
+  @keyframes pulse-ring{0%{r:7;opacity:1;}70%{r:36;opacity:0;}100%{r:36;opacity:0;}}
+  .target .pulse{fill:none;stroke:var(--brass);stroke-width:2;transform-origin:200px 200px;animation:pulse-ring 2.4s ease-out infinite;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px;}
+  .stat-strip div{background:var(--paper-raised);padding:22px 20px;}
+  .stat-strip b{display:block;font-family:'Fraunces',serif;font-size:28px;font-weight:600;}
+  .stat-strip span{font-size:12.5px;color:var(--ink-soft);}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  .service-card,.edge-card,.edu-card{transition:transform .18s ease,box-shadow .18s ease;}
+  .service-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,33,61,.08);}
+  .edge-card:hover h3{color:var(--brass-deep);}
+
+  /* sections */
+  section{padding:88px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:640px;margin-bottom:48px;}
+  .section-head h2{font-size:34px;margin-top:10px;}
+  .section-head p{color:var(--ink-soft);margin-top:14px;font-size:16px;}
+
+  /* services */
+  .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .service-card{background:var(--paper-raised);padding:32px;}
+  .service-card h3{font-size:20px;margin-bottom:10px;}
+  .service-card p{color:var(--ink-soft);font-size:15px;margin-bottom:16px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-size:12px;font-family:'IBM Plex Mono',monospace;border:1px solid var(--line-strong);
+    padding:5px 10px;border-radius:2px;color:var(--ink-soft);
+  }
+
+  /* why vfactor */
+  .edge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .edge-card{padding:0;}
+  .edge-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .edge-card h3{font-size:18px;margin-bottom:10px;}
+  .edge-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* founder */
+  .founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;}
+  .founder-card{
+    background:var(--ink);color:var(--paper);padding:36px;border-radius:2px;
+  }
+  .founder-card .eyebrow{color:#D8C48A;}
+  .founder-card h3{color:var(--paper);font-size:24px;margin:12px 0 6px;}
+  .founder-card .role{color:#B9C2D6;font-size:14px;margin-bottom:22px;}
+  .founder-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px;}
+  .founder-stats div b{display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:600;}
+  .founder-stats div span{font-size:12.5px;color:#B9C2D6;}
+  .founder-links{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-size:14px;}
+  .founder-links a{display:flex;align-items:center;gap:10px;color:#E8E4D6;}
+  .founder-links a:hover{color:var(--brass);}
+
+  .timeline{border-left:1px solid var(--line-strong);padding-left:26px;display:flex;flex-direction:column;gap:26px;}
+  .tl-item{position:relative;}
+  .tl-item::before{
+    content:"";position:absolute;left:-31px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--brass);
+    box-shadow:0 0 0 3px var(--paper);
+  }
+  .tl-item .yr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-deep);}
+  .tl-item h4{font-size:17px;margin:4px 0 6px;}
+  .tl-item p{color:var(--ink-soft);font-size:14.5px;}
+
+  .earlier{margin-top:36px;padding-top:26px;border-top:1px solid var(--line);}
+  .earlier .eyebrow{margin-bottom:12px;}
+  .earlier-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .earlier-row span{font-size:13.5px;border:1px solid var(--line-strong);padding:7px 12px;border-radius:2px;}
+
+  .founder-bio{margin-top:40px;}
+  .founder-bio h3{font-size:22px;margin-bottom:16px;}
+  .bio-list{display:flex;flex-direction:column;gap:14px;}
+  .bio-list li{list-style:none;display:flex;gap:12px;font-size:15px;color:var(--ink-soft);}
+  .bio-list li .ring{margin-top:7px;}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .edu-card{border:1px solid var(--line);padding:24px;background:var(--paper-raised);}
+  .edu-card .eyebrow{margin-bottom:10px;}
+  .edu-card h4{font-size:16px;line-height:1.4;}
+  .edu-card p{font-size:13.5px;color:var(--ink-soft);margin-top:6px;}
+
+  /* testimonial */
+  .testimonial{
+    background:var(--paper-raised);border:1px solid var(--line);padding:48px;position:relative;
+  }
+  .testimonial p{font-family:'Fraunces',serif;font-size:22px;line-height:1.5;font-style:italic;color:var(--ink);max-width:70ch;}
+  .testimonial .who{margin-top:22px;font-family:'Inter';font-style:normal;font-size:14px;color:var(--ink-soft);}
+
+  /* contact */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .contact-card{
+    background:var(--ink);color:var(--paper);padding:40px;border-radius:2px;
+  }
+  .contact-card h3{color:var(--paper);font-size:24px;margin-bottom:8px;}
+  .contact-card p{color:#B9C2D6;font-size:14.5px;margin-bottom:28px;}
+  .clink{
+    display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(255,255,255,.16);font-size:15px;
+  }
+  .clink:first-of-type{border-top:1px solid rgba(255,255,255,.16);}
+  .clink:hover{color:var(--brass);}
+  .clink small{display:block;color:#93A0BC;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:3px;}
+  .contact-side{display:flex;flex-direction:column;justify-content:center;}
+  .contact-side p{color:var(--ink-soft);font-size:15px;margin-bottom:20px;}
+  .contact-side .btn{align-self:flex-start;}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;gap:10px;}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .target{display:none;}
+    .hero h1{font-size:38px;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .service-grid{grid-template-columns:1fr;}
+    .edge-grid{grid-template-columns:repeat(2,1fr);}
+    .founder{grid-template-columns:1fr;}
+    .edu-grid{grid-template-columns:1fr;}
+    .contact-wrap{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">Vfactor<span>.</span></div>
+    <nav class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#edge">Why Vfactor</a>
+      <a href="#founder">Founder</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="mailto:cpvijay25@gmail.com">Talk to us</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Recruitment · RPO · Lead Generation</div>
+        <h1>Stop sifting resumes. Start hiring with <em>bulls-eye</em> precision.</h1>
+        <p class="lede">Vfactor Solutions is an independent recruitment outsourcing and lead-generation practice built on three decades of sourcing engineering, technology and business talent across India and the US.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Get candidates, not resumes</a>
+          <a class="btn btn-ghost" href="#services">See services</a>
+        </div>
+      </div>
+      <svg class="target" viewBox="0 0 400 400">
+        <circle class="c1" cx="200" cy="200" r="170"/>
+        <circle cx="200" cy="200" r="128"/>
+        <circle cx="200" cy="200" r="86"/>
+        <circle cx="200" cy="200" r="44"/>
+        <circle class="pulse" cx="200" cy="200" r="7"/>
+        <circle class="dot" cx="200" cy="200" r="7"/>
+        <line x1="200" y1="10" x2="200" y2="60" stroke="#DAD5C6"/>
+        <line x1="200" y1="340" x2="200" y2="390" stroke="#DAD5C6"/>
+        <line x1="10" y1="200" x2="60" y2="200" stroke="#DAD5C6"/>
+        <line x1="340" y1="200" x2="390" y2="200" stroke="#DAD5C6"/>
+      </svg>
+    </div>
+    <div class="stat-strip">
+      <div><b>35+ yrs</b><span>Cross-industry experience</span></div>
+      <div><b>2</b><span>Markets — India and the US</span></div>
+      <div><b>6 yrs</b><span>EdTech domain experience</span></div>
+      <div><b>5</b><span>Sectors served</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Two levers. Real movement.</h2>
+      <p>Vfactor is built to close the gaps left by conventional recruitment outsourcing — with validated data, direct accountability and no bloated retainer.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>Recruitment, freshers to top management</h3>
+        <p>End-to-end sourcing across India for clients in IT, manufacturing, telecom, engineering and logistics.</p>
+        <div class="tag-row">
+          <span class="tag">Software technologies</span>
+          <span class="tag">Automobile / telecom</span>
+          <span class="tag">Finance and accounts</span>
+          <span class="tag">Human resource</span>
+          <span class="tag">Technical support</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <h3>Lead generation</h3>
+        <p>Targeted, validated lead lists built around your customer base — or any data set your business needs to grow.</p>
+        <div class="tag-row">
+          <span class="tag">Targeted prospect data</span>
+          <span class="tag">Custom data builds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="edge" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why Vfactor</div>
+      <h2>No bloat. No excuses. Just results.</h2>
+    </div>
+    <div class="edge-grid">
+      <div class="edge-card">
+        <div class="edge-num"><span class="ring"></span>Data validation</div>
+        <h3>Precise, every time</h3>
+        <p>Every candidate and lead is validated before it reaches you — barely any rejections.</p>
+      </div>
+      <div class="edge-card">
+        <div class="edge-num"><span class="ring"></span>Accountability</div>
+        <h3>Full ownership</h3>
+        <p>We take responsibility for every part of the engagement and resolve issues at the earliest possible time.</p>
+      </div>
+      <div class="edge-card">
+        <div class="edge-num"><span class="ring"></span>Professional</div>
+        <h3>Set by your standard</h3>
+        <p>We adapt to your expected standard rather than the market norm — transparent, flexible, sincere.</p>
+      </div>
+      <div class="edge-card">
+        <div class="edge-num"><span class="ring"></span>Economical</div>
+        <h3>Lower cost, same rigor</h3>
+        <p>We reduce cost to the client with the lowest service charges, without compromising quality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="founder" class="reveal">
+  <div class="wrap founder">
+    <div>
+      <div class="founder-card">
+        <div class="eyebrow">Founder</div>
+        <h3>Vijay Purushothaman</h3>
+        <div class="role">Business Leader — Recruitment &amp; HR Consulting, Customer Success, EdTech Operations</div>
+        <p style="color:#D6DCE8;font-size:14.5px;">35+ years across Recruitment &amp; HR Consulting, EdTech, Software Development, Manufacturing and Operations Management, in Indian and international markets.</p>
+        <div class="founder-stats">
+          <div><b>35+ yrs</b><span>Cross-industry experience</span></div>
+          <div><b>6+ yrs</b><span>Based in the United States</span></div>
+          <div><b>16 yrs</b><span>Country Head of Business, India</span></div>
+          <div><b>6 yrs</b><span>EdTech domain experience</span></div>
+        </div>
+        <div class="founder-links">
+          <a href="mailto:cpvijay25@gmail.com">cpvijay25@gmail.com</a>
+          <a href="tel:+919150462580">+91 91504 62580</a>
+          <a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">linkedin.com/in/vijay-purushothaman</a>
+        </div>
+      </div>
+
+      <div class="founder-bio">
+        <h3>About the founder</h3>
+        <ul class="bio-list">
+          <li><span class="ring"></span>First 7 years in manufacturing — TVS Suzuki, BPL Limited, Arvind Mills and Autolec (TVS Group) — across exports, marketing, operations, shipments and logistics, dealer network and sales campaigns.</li>
+          <li><span class="ring"></span>Next 22 years with a global software development and recruitment company spanning the US and India — 6+ years in the US on business development, account management, recruitment and operations, then 16 years in India as Country Head of Business.</li>
+          <li><span class="ring"></span>Procured, architected and delivered offshore software projects built in Chennai, including a blood bank product, a recruitment portal and an event management platform.</li>
+          <li><span class="ring"></span>Ran domestic recruitment, software development delivery, and US and Australian staffing markets simultaneously.</li>
+          <li><span class="ring"></span>6 years in the EdTech domain, spanning BridgeLabz as Head of Customer Success / Head of Lateral Business (2019–2022) and Vfactor's own training and EdTech operations (2022–present) — enrollment operations, student and college counseling, career guidance seminars and orientations, and lateral hiring for tech talent.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-head" style="margin-bottom:32px;">
+        <div class="eyebrow">Career highlights</div>
+        <h2 style="font-size:28px;">Three decades, four defining roles</h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="yr">2022 — Present</div>
+          <h4>Independent Business Consultant, Vfactor Solutions</h4>
+          <p>HR consulting and recruitment outsourcing; client acquisition and relationship management; IT recruitment from freshers to leadership; training and EdTech operations.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">2019 — 2022</div>
+          <h4>Head of Customer Success / Head, Lateral Business — BridgeLabz</h4>
+          <p>Led customer success and enrollment operations; new client acquisition; managed counseling and lead generation teams; ran seminars, orientations and career guidance programs; built the lateral hiring vertical.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">1999 — 2019</div>
+          <h4>Senior Vice President, Everest Consulting Group</h4>
+          <p>Led recruitment and business development across India and the US; managed offshore recruitment teams serving the US market; owned account management, software product development, operations and profitability; established processes and growth strategy across sectors.</p>
+        </div>
+      </div>
+
+      <div class="earlier">
+        <div class="eyebrow">Earlier career</div>
+        <div class="earlier-row">
+          <span>TVS Motor Company</span>
+          <span>BPL Limited</span>
+          <span>Arvind Fashions Limited</span>
+          <span>Autolec Industries</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonial" class="reveal">
+  <div class="wrap">
+    <div class="testimonial">
+      <p>"It has been many years since I personally know Vijay from Vfactor Solutions, who has vast experience in sourcing software engineers for clients across India and the United States. I admire his dedication and determination to add value to his work."</p>
+      <div class="who">Antony — Project Manager and Architect, ex. Sports Mechanics</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="wrap contact-wrap">
+    <div class="contact-card">
+      <div class="eyebrow">Get in touch</div>
+      <h3>Your next great hire starts here</h3>
+      <p>Reach out directly — every engagement starts with a conversation about what precision hiring looks like for you.</p>
+      <a class="clink" href="mailto:cpvijay25@gmail.com"><div><small>Email</small>cpvijay25@gmail.com</div></a>
+      <a class="clink" href="tel:+919150462580"><div><small>Phone</small>+91 91504 62580</div></a>
+      <a class="clink" href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener"><div><small>LinkedIn</small>linkedin.com/in/vijay-purushothaman</div></a>
+    </div>
+    <div class="contact-side">
+      <div class="eyebrow">Chennai, Tamil Nadu, India</div>
+      <p>Working with clients across IT, manufacturing, banking, finance and education — in Indian and international markets.</p>
+      <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Email Vfactor</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>© 2026 Vfactor Solutions. All rights reserved.</div>
+    <div>Recruitment · RPO · Lead Generation</div>
+  </div>
+</footer>
+
+<script>
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  els.forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>
