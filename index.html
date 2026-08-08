@@ -3,22 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vfactor Solutions — Recruitment, RPO & Lead Generation</title>
+<title>vFactor Solutions — Recruitment, RPO & Lead Generation</title>
+<script>
+  (function(){
+    var saved = localStorage.getItem('vfactor-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
   :root{
     --ink:#14213D;
     --ink-soft:#3A4664;
-    --paper:#F7F5EE;
+    --paper:#F5F7FB;
     --paper-raised:#FFFFFF;
-    --brass:#A9822C;
-    --brass-deep:#7A5D1E;
+    --accent:#1A5FBF;
+    --accent-deep:#0E3F87;
+    --star:#C9922B;
     --teal:#1F4B4B;
-    --line:#DAD5C6;
-    --line-strong:#C2BCA8;
+    --line:#DCE2EA;
+    --line-strong:#C3CCD9;
   }
+  [data-theme="dark"]{
+    --ink:#EAEFF7;
+    --ink-soft:#A6B2C4;
+    --paper:#0D1420;
+    --paper-raised:#151E2B;
+    --accent:#5C9AF2;
+    --accent-deep:#8FBBF7;
+    --star:#E0A83E;
+    --teal:#3E9188;
+    --line:#263243;
+    --line-strong:#37455A;
+  }
+  :root{ --ease:cubic-bezier(.65,0,.35,1); --dur:.6s; }
+  *{transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),fill var(--dur) var(--ease),stroke var(--dur) var(--ease);}
+  html{transition:background-color var(--dur) var(--ease);}
+  body{transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease);}
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -34,7 +59,7 @@
     font-size:12px;
     letter-spacing:.12em;
     text-transform:uppercase;
-    color:var(--brass-deep);
+    color:var(--accent-deep);
   }
   a{color:inherit;text-decoration:none;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
@@ -42,7 +67,7 @@
   /* ring signature element */
   .ring{
     display:inline-block;width:9px;height:9px;border-radius:50%;
-    border:1.5px solid var(--brass);position:relative;flex-shrink:0;
+    border:1.5px solid var(--accent);position:relative;flex-shrink:0;
   }
   .ring::after{
     content:"";position:absolute;inset:-5px;border:1px solid var(--line-strong);border-radius:50%;
@@ -51,24 +76,36 @@
   /* header */
   header{
     position:sticky;top:0;z-index:20;
-    background:rgba(247,245,238,.92);backdrop-filter:blur(6px);
+    background:var(--paper);backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
   .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1120px;margin:0 auto;}
   .brand{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:.01em;}
-  .brand span{color:var(--brass);}
+  .brand span{color:var(--accent);}
   .navlinks{display:flex;gap:28px;font-size:14px;color:var(--ink-soft);}
   .navlinks a:hover{color:var(--ink);}
   .nav-cta{
     font-size:13px;font-weight:600;border:1px solid var(--ink);padding:8px 16px;border-radius:2px;
   }
   .nav-cta:hover{background:var(--ink);color:var(--paper);}
+  .theme-toggle{
+    width:36px;height:36px;border:1px solid var(--line-strong);border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+    background:var(--paper-raised);color:var(--ink-soft);font-size:16px;position:relative;
+    transition:border-color .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+  }
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);transform:rotate(14deg);}
+  .theme-toggle i{position:absolute;transition:opacity .5s var(--ease),transform .5s var(--ease);}
+  .theme-toggle .ti-moon{opacity:0;transform:rotate(-60deg) scale(.5);}
+  .theme-toggle .ti-sun{opacity:1;transform:rotate(0) scale(1);}
+  [data-theme="dark"] .theme-toggle .ti-sun{opacity:0;transform:rotate(60deg) scale(.5);}
+  [data-theme="dark"] .theme-toggle .ti-moon{opacity:1;transform:rotate(0) scale(1);}
 
   /* hero */
   .hero{position:relative;overflow:hidden;padding:96px 0 100px;}
   .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
   .hero h1{font-size:52px;line-height:1.08;letter-spacing:-.01em;margin:18px 0 24px;}
-  .hero h1 em{font-style:italic;color:var(--brass-deep);}
+  .hero h1 em{font-style:italic;color:var(--accent-deep);}
   .hero p.lede{font-size:18px;color:var(--ink-soft);max-width:46ch;margin-bottom:34px;}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
   .btn{
@@ -76,29 +113,75 @@
   }
   .btn-primary{background:var(--ink);color:var(--paper);}
   .btn-primary:hover{background:var(--teal);}
-  .btn{transition:transform .15s ease,background .15s ease,border-color .15s ease;}
-  .btn:hover{transform:translateY(-2px);}
+  .btn{transition:transform .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease);}
+  .btn:hover{transform:translateY(-3px);}
   .btn-ghost{border:1px solid var(--line-strong);}
   .btn-ghost:hover{border-color:var(--ink);}
 
   .target{width:100%;max-width:420px;justify-self:center;}
   .target circle{fill:none;stroke:var(--line-strong);}
-  .target .c1{stroke:var(--brass);stroke-width:1.4;}
-  .target .dot{fill:var(--brass-deep);}
+  .target .c1{stroke:var(--accent);stroke-width:1.4;}
+  .target .dot{fill:var(--accent-deep);}
   @keyframes pulse-ring{0%{r:7;opacity:1;}70%{r:36;opacity:0;}100%{r:36;opacity:0;}}
-  .target .pulse{fill:none;stroke:var(--brass);stroke-width:2;transform-origin:200px 200px;animation:pulse-ring 2.4s ease-out infinite;}
+  .target .pulse{fill:none;stroke:var(--accent);stroke-width:2;transform-origin:200px 200px;animation:pulse-ring 2.4s ease-out infinite;}
 
   .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px;}
   .stat-strip div{background:var(--paper-raised);padding:22px 20px;}
   .stat-strip b{display:block;font-family:'Fraunces',serif;font-size:28px;font-weight:600;}
   .stat-strip span{font-size:12.5px;color:var(--ink-soft);}
 
-  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
   .reveal.in{opacity:1;transform:translateY(0);}
 
-  .service-card,.edge-card,.edu-card{transition:transform .18s ease,box-shadow .18s ease;}
-  .service-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,33,61,.08);}
-  .edge-card:hover h3{color:var(--brass-deep);}
+  .service-card,.edge-card,.edu-card{transition:transform .4s var(--ease),box-shadow .4s var(--ease),background-color var(--dur) var(--ease);}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,33,61,.1);}
+  .edge-card:hover h3{color:var(--accent-deep);}
+
+  /* nav active state */
+  .navlinks a{position:relative;padding-bottom:4px;transition:color .3s var(--ease);}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent-deep);transition:width .4s var(--ease);}
+  .navlinks a.active{color:var(--ink);}
+  .navlinks a.active::after{width:100%;}
+
+  /* expertise / skills */
+  .skill-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .skill-group{background:var(--paper-raised);padding:28px 26px;}
+  .skill-group h3{font-size:16px;margin-bottom:16px;}
+  .skill-list{display:flex;flex-direction:column;gap:12px;}
+  .skill-list li{list-style:none;display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink-soft);}
+  .skill-list li .ring{margin-top:6px;}
+
+  /* linkedin */
+  .li-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start;}
+  .li-badge-card{border:1px solid var(--line);background:var(--paper-raised);padding:28px;text-align:center;}
+  .li-badge-card i{font-size:34px;color:var(--accent-deep);}
+  .li-badge-card h3{font-size:18px;margin:14px 0 6px;}
+  .li-badge-card p{color:var(--ink-soft);font-size:14px;margin-bottom:20px;}
+  .li-posts{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .li-post{background:var(--paper-raised);padding:22px 24px;display:flex;gap:16px;}
+  .li-post i{font-size:20px;color:var(--accent-deep);margin-top:2px;}
+  .li-post .li-date{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+  .li-post p{font-size:14.5px;color:var(--ink-soft);}
+  .li-post a{color:var(--accent-deep);font-weight:600;}
+
+  /* reviews */
+  .reviews-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .review-card{background:var(--paper-raised);padding:24px;}
+  .review-stars{color:var(--star);font-size:14px;margin-bottom:10px;letter-spacing:2px;}
+  .review-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .review-who{font-size:13px;font-weight:600;color:var(--ink);}
+  .review-form{border:1px solid var(--line);background:var(--paper-raised);padding:28px;}
+  .review-form h3{font-size:18px;margin-bottom:6px;}
+  .review-form p.hint{font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .review-form label{display:block;font-size:12.5px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:6px;}
+  .review-form input,.review-form textarea{
+    width:100%;font-family:'Inter',sans-serif;font-size:14.5px;padding:11px 12px;
+    border:1px solid var(--line-strong);background:var(--paper);margin-bottom:16px;border-radius:2px;color:var(--ink);
+  }
+  .review-form input:focus,.review-form textarea:focus{outline:none;border-color:var(--accent);}
+  .review-form textarea{resize:vertical;min-height:90px;}
+  .review-form button{width:100%;cursor:pointer;font-family:'Inter';}
 
   /* sections */
   section{padding:88px 0;border-top:1px solid var(--line);}
@@ -120,7 +203,7 @@
   /* why vfactor */
   .edge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
   .edge-card{padding:0;}
-  .edge-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .edge-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
   .edge-card h3{font-size:18px;margin-bottom:10px;}
   .edge-card p{color:var(--ink-soft);font-size:14.5px;}
 
@@ -129,7 +212,7 @@
   .founder-card{
     background:var(--ink);color:var(--paper);padding:36px;border-radius:2px;
   }
-  .founder-card .eyebrow{color:#D8C48A;}
+  .founder-card .eyebrow{color:#9FC2EE;}
   .founder-card h3{color:var(--paper);font-size:24px;margin:12px 0 6px;}
   .founder-card .role{color:#B9C2D6;font-size:14px;margin-bottom:22px;}
   .founder-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px;}
@@ -137,15 +220,15 @@
   .founder-stats div span{font-size:12.5px;color:#B9C2D6;}
   .founder-links{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-size:14px;}
   .founder-links a{display:flex;align-items:center;gap:10px;color:#E8E4D6;}
-  .founder-links a:hover{color:var(--brass);}
+  .founder-links a:hover{color:var(--accent);}
 
   .timeline{border-left:1px solid var(--line-strong);padding-left:26px;display:flex;flex-direction:column;gap:26px;}
   .tl-item{position:relative;}
   .tl-item::before{
-    content:"";position:absolute;left:-31px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--brass);
+    content:"";position:absolute;left:-31px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--accent);
     box-shadow:0 0 0 3px var(--paper);
   }
-  .tl-item .yr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-deep);}
+  .tl-item .yr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent-deep);}
   .tl-item h4{font-size:17px;margin:4px 0 6px;}
   .tl-item p{color:var(--ink-soft);font-size:14.5px;}
 
@@ -185,7 +268,7 @@
     display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(255,255,255,.16);font-size:15px;
   }
   .clink:first-of-type{border-top:1px solid rgba(255,255,255,.16);}
-  .clink:hover{color:var(--brass);}
+  .clink:hover{color:var(--accent);}
   .clink small{display:block;color:#93A0BC;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:3px;}
   .contact-side{display:flex;flex-direction:column;justify-content:center;}
   .contact-side p{color:var(--ink-soft);font-size:15px;margin-bottom:20px;}
@@ -202,6 +285,10 @@
     .service-grid{grid-template-columns:1fr;}
     .edge-grid{grid-template-columns:repeat(2,1fr);}
     .founder{grid-template-columns:1fr;}
+    .skill-groups{grid-template-columns:1fr;}
+    .li-wrap{grid-template-columns:1fr;}
+    .reviews-wrap{grid-template-columns:1fr;}
+    .review-grid{grid-template-columns:1fr;}
     .edu-grid{grid-template-columns:1fr;}
     .contact-wrap{grid-template-columns:1fr;}
     .navlinks{display:none;}
@@ -212,14 +299,21 @@
 
 <header>
   <div class="nav">
-    <div class="brand">Vfactor<span>.</span></div>
+    <div class="brand">vFactor<span>.</span></div>
     <nav class="navlinks">
       <a href="#services">Services</a>
-      <a href="#edge">Why Vfactor</a>
+      <a href="#edge">Why vFactor</a>
+      <a href="#expertise">Expertise</a>
       <a href="#founder">Founder</a>
+      <a href="#linkedin">LinkedIn</a>
+      <a href="#reviews">Reviews</a>
       <a href="#contact">Contact</a>
     </nav>
     <a class="nav-cta" href="mailto:cpvijay25@gmail.com">Talk to us</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" style="margin-left:14px;margin-right:0;">
+      <i class="ti ti-sun" aria-hidden="true"></i>
+      <i class="ti ti-moon" aria-hidden="true"></i>
+    </button>
   </div>
 </header>
 
@@ -229,7 +323,7 @@
       <div>
         <div class="eyebrow">Recruitment · RPO · Lead Generation</div>
         <h1>Stop sifting resumes. Start hiring with <em>bulls-eye</em> precision.</h1>
-        <p class="lede">Vfactor Solutions is an independent recruitment outsourcing and lead-generation practice built on three decades of sourcing engineering, technology and business talent across India and the US.</p>
+        <p class="lede">vFactor Solutions is an independent recruitment outsourcing and lead-generation practice built on three decades of sourcing engineering, technology and business talent across India and the US.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Get candidates, not resumes</a>
           <a class="btn btn-ghost" href="#services">See services</a>
@@ -242,10 +336,10 @@
         <circle cx="200" cy="200" r="44"/>
         <circle class="pulse" cx="200" cy="200" r="7"/>
         <circle class="dot" cx="200" cy="200" r="7"/>
-        <line x1="200" y1="10" x2="200" y2="60" stroke="#DAD5C6"/>
-        <line x1="200" y1="340" x2="200" y2="390" stroke="#DAD5C6"/>
-        <line x1="10" y1="200" x2="60" y2="200" stroke="#DAD5C6"/>
-        <line x1="340" y1="200" x2="390" y2="200" stroke="#DAD5C6"/>
+        <line x1="200" y1="10" x2="200" y2="60" stroke="#DCE2EA"/>
+        <line x1="200" y1="340" x2="200" y2="390" stroke="#DCE2EA"/>
+        <line x1="10" y1="200" x2="60" y2="200" stroke="#DCE2EA"/>
+        <line x1="340" y1="200" x2="390" y2="200" stroke="#DCE2EA"/>
       </svg>
     </div>
     <div class="stat-strip">
@@ -262,7 +356,7 @@
     <div class="section-head">
       <div class="eyebrow">What we do</div>
       <h2>Two levers. Real movement.</h2>
-      <p>Vfactor is built to close the gaps left by conventional recruitment outsourcing — with validated data, direct accountability and no bloated retainer.</p>
+      <p>vFactor is built to close the gaps left by conventional recruitment outsourcing — with validated data, direct accountability and no bloated retainer.</p>
     </div>
     <div class="service-grid">
       <div class="service-card">
@@ -291,7 +385,7 @@
 <section id="edge" class="reveal">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">Why Vfactor</div>
+      <div class="eyebrow">Why vFactor</div>
       <h2>No bloat. No excuses. Just results.</h2>
     </div>
     <div class="edge-grid">
@@ -314,6 +408,44 @@
         <div class="edge-num"><span class="ring"></span>Economical</div>
         <h3>Lower cost, same rigor</h3>
         <p>We reduce cost to the client with the lowest service charges, without compromising quality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expertise" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Expertise</div>
+      <h2>Skills built across four industries</h2>
+      <p>Eleven core competencies, exercised end-to-end — not siloed to one function.</p>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Business growth</h3>
+        <ul class="skill-list">
+          <li><span class="ring"></span>Business development and client acquisition</li>
+          <li><span class="ring"></span>Lead generation and sales management</li>
+          <li><span class="ring"></span>Strategic planning and team leadership</li>
+          <li><span class="ring"></span>P&amp;L management</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>People and talent</h3>
+        <ul class="skill-list">
+          <li><span class="ring"></span>Recruitment process outsourcing (RPO)</li>
+          <li><span class="ring"></span>Talent acquisition and staffing</li>
+          <li><span class="ring"></span>Customer success and account management</li>
+          <li><span class="ring"></span>Training and people development</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Operations</h3>
+        <ul class="skill-list">
+          <li><span class="ring"></span>EdTech operations and student counseling</li>
+          <li><span class="ring"></span>Operations and process management</li>
+          <li><span class="ring"></span>Software business analysis</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -347,7 +479,7 @@
           <li><span class="ring"></span>Next 22 years with a global software development and recruitment company spanning the US and India — 6+ years in the US on business development, account management, recruitment and operations, then 16 years in India as Country Head of Business.</li>
           <li><span class="ring"></span>Procured, architected and delivered offshore software projects built in Chennai, including a blood bank product, a recruitment portal and an event management platform.</li>
           <li><span class="ring"></span>Ran domestic recruitment, software development delivery, and US and Australian staffing markets simultaneously.</li>
-          <li><span class="ring"></span>6 years in the EdTech domain, spanning BridgeLabz as Head of Customer Success / Head of Lateral Business (2019–2022) and Vfactor's own training and EdTech operations (2022–present) — enrollment operations, student and college counseling, career guidance seminars and orientations, and lateral hiring for tech talent.</li>
+          <li><span class="ring"></span>6 years in the EdTech domain, spanning BridgeLabz as Head of Customer Success / Head of Lateral Business (2019–2022) and vFactor's own training and EdTech operations (2022–present) — enrollment operations, student and college counseling, career guidance seminars and orientations, and lateral hiring for tech talent.</li>
         </ul>
       </div>
     </div>
@@ -360,7 +492,7 @@
       <div class="timeline">
         <div class="tl-item">
           <div class="yr">2022 — Present</div>
-          <h4>Independent Business Consultant, Vfactor Solutions</h4>
+          <h4>Independent Business Consultant, vFactor Solutions</h4>
           <p>HR consulting and recruitment outsourcing; client acquisition and relationship management; IT recruitment from freshers to leadership; training and EdTech operations.</p>
         </div>
         <div class="tl-item">
@@ -388,11 +520,74 @@
   </div>
 </section>
 
-<section id="testimonial" class="reveal">
+<section id="linkedin" class="reveal">
   <div class="wrap">
-    <div class="testimonial">
-      <p>"It has been many years since I personally know Vijay from Vfactor Solutions, who has vast experience in sourcing software engineers for clients across India and the United States. I admire his dedication and determination to add value to his work."</p>
-      <div class="who">Antony — Project Manager and Architect, ex. Sports Mechanics</div>
+    <div class="section-head">
+      <div class="eyebrow">LinkedIn</div>
+      <h2>Straight from the source</h2>
+      <p>Follow along for hiring updates, open roles and recruitment insight — or catch up on recent posts below.</p>
+    </div>
+    <div class="li-wrap">
+      <div class="li-badge-card">
+        <i class="ti ti-brand-linkedin" aria-hidden="true"></i>
+        <h3>Vijay Purushothaman</h3>
+        <p>Business Leader — Recruitment &amp; HR Consulting</p>
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">Follow on LinkedIn</a>
+      </div>
+      <div class="li-posts">
+        <div class="li-post">
+          <i class="ti ti-briefcase" aria-hidden="true"></i>
+          <div>
+            <div class="li-date">Hiring update</div>
+            <p>Actively sourcing for IT and manufacturing roles this quarter. <a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">See open positions on LinkedIn →</a></p>
+          </div>
+        </div>
+        <div class="li-post">
+          <i class="ti ti-users" aria-hidden="true"></i>
+          <div>
+            <div class="li-date">Recruitment insight</div>
+            <p>Thoughts on what makes a recruitment process outsourcing engagement actually work. <a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">Read the post →</a></p>
+          </div>
+        </div>
+        <div class="li-post">
+          <i class="ti ti-school" aria-hidden="true"></i>
+          <div>
+            <div class="li-date">EdTech</div>
+            <p>Reflections on six years of student counseling and lateral hiring in EdTech. <a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">Read the post →</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Reviews</div>
+      <h2>What clients and colleagues say</h2>
+    </div>
+    <div class="reviews-wrap">
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>"It has been many years since I personally know Vijay from vFactor Solutions, who has vast experience in sourcing software engineers for clients across India and the United States. I admire his dedication and determination to add value to his work."</p>
+          <div class="review-who">Antony — Project Manager and Architect, ex. Sports Mechanics</div>
+        </div>
+      </div>
+      <div class="review-form">
+        <h3>Leave a review</h3>
+        <p class="hint">Worked with vFactor? Share your experience — it goes straight to Vijay's inbox for review before it's published.</p>
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <label for="rv-name">Name</label>
+          <input id="rv-name" name="name" type="text" required>
+          <label for="rv-org">Company (optional)</label>
+          <input id="rv-org" name="company" type="text">
+          <label for="rv-review">Your review</label>
+          <textarea id="rv-review" name="review" required></textarea>
+          <button class="btn btn-primary" type="submit">Submit review</button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -410,14 +605,14 @@
     <div class="contact-side">
       <div class="eyebrow">Chennai, Tamil Nadu, India</div>
       <p>Working with clients across IT, manufacturing, banking, finance and education — in Indian and international markets.</p>
-      <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Email Vfactor</a>
+      <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Email vFactor</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-row">
-    <div>© 2026 Vfactor Solutions. All rights reserved.</div>
+    <div>© 2026 vFactor Solutions. All rights reserved.</div>
     <div>Recruitment · RPO · Lead Generation</div>
   </div>
 </footer>
@@ -428,6 +623,27 @@
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:.12});
   els.forEach(function(el){ io.observe(el); });
+
+  var navLinks = document.querySelectorAll('.navlinks a');
+  var navSections = Array.prototype.map.call(navLinks, function(a){ return document.querySelector(a.getAttribute('href')); });
+  var navIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var idx = navSections.indexOf(e.target);
+        navLinks.forEach(function(a){ a.classList.remove('active'); });
+        if(idx > -1) navLinks[idx].classList.add('active');
+      }
+    });
+  }, {rootMargin:'-45% 0px -45% 0px'});
+  navSections.forEach(function(s){ if(s) navIo.observe(s); });
+
+  var toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('vfactor-theme', next);
+  });
 </script>
 </body>
 </html>
