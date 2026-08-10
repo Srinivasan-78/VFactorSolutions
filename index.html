@@ -287,6 +287,37 @@
 
   footer{border-top:1px solid var(--line);padding:32px 0;}
   .foot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;gap:10px;}
+  #visit-count-wrap{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  #visit-count-wrap i{font-size:14px;}
+
+  /* first-visit modal */
+  .visit-modal{
+    position:fixed;inset:0;background:rgba(10,14,10,.55);backdrop-filter:blur(3px);
+    display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;
+    opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+  }
+  .visit-modal.open{opacity:1;pointer-events:auto;}
+  .visit-modal-card{
+    background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);
+    padding:34px;max-width:420px;width:100%;position:relative;
+    transform:translateY(14px) scale(.97);transition:transform .4s var(--ease);
+  }
+  .visit-modal.open .visit-modal-card{transform:translateY(0) scale(1);}
+  .visit-modal-card h3{font-size:22px;margin:8px 0 8px;}
+  .visit-modal-card p{color:var(--ink-soft);font-size:14px;margin-bottom:22px;}
+  .visit-close{
+    position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;
+    color:var(--ink-soft);cursor:pointer;line-height:1;padding:4px;
+  }
+  .visit-close:hover{color:var(--ink);}
+  .visit-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .visit-options button{
+    font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:12px 10px;
+    border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:999px;
+    cursor:pointer;transition:border-color .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+  }
+  .visit-options button:hover{border-color:var(--field);background:var(--field-tint);color:var(--field-deep);}
+  @media (max-width:480px){ .visit-options{grid-template-columns:1fr;} }
 
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;}
@@ -602,9 +633,25 @@
   </div>
 </section>
 
+<div id="visit-modal" class="visit-modal">
+  <div class="visit-modal-card">
+    <button class="visit-close" id="visit-close" aria-label="Close">×</button>
+    <div class="eyebrow">Quick question</div>
+    <h3>What brings you here today?</h3>
+    <p>One tap — helps us know who's stopping by.</p>
+    <div class="visit-options">
+      <button data-intent="Hiring talent">Hiring talent</button>
+      <button data-intent="Looking for a role">Looking for a role</button>
+      <button data-intent="Lead generation">Lead generation</button>
+      <button data-intent="Just exploring">Just exploring</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap foot-row">
     <div>© 2026 vFactor Solutions. All rights reserved.</div>
+    <div id="visit-count-wrap"><i class="ti ti-eye" aria-hidden="true"></i> <span id="visit-count">—</span> visits</div>
     <div>Recruitment · RPO · Lead Generation</div>
   </div>
 </footer>
@@ -636,6 +683,51 @@
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('vfactor-theme', next);
   });
+
+  // Visit counter — free public counter, no signup required
+  fetch('https://api.countapi.xyz/hit/vfactorsolutions-com/site-visits')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var el = document.getElementById('visit-count');
+      if(el) el.textContent = data.value.toLocaleString();
+    })
+    .catch(function(){
+      var wrap = document.getElementById('visit-count-wrap');
+      if(wrap) wrap.style.display = 'none';
+    });
+
+  // First-visit intent prompt + email ping (per-browser "unique", via Formspree)
+  var VISIT_KEY = 'vfactor_visited';
+  var modal = document.getElementById('visit-modal');
+
+  function notifyNewVisitor(intent){
+    fetch('https://formspree.io/f/YOUR_VISITOR_FORM_ID', {
+      method:'POST',
+      headers:{'Accept':'application/json','Content-Type':'application/json'},
+      body: JSON.stringify({
+        message: 'New first-time visitor on the vFactor site',
+        intent: intent || 'Not specified',
+        page: window.location.href,
+        referrer: document.referrer || 'direct',
+        time: new Date().toISOString()
+      })
+    }).catch(function(){});
+  }
+
+  function closeModal(intent){
+    modal.classList.remove('open');
+    localStorage.setItem(VISIT_KEY, '1');
+    notifyNewVisitor(intent);
+  }
+
+  if(!localStorage.getItem(VISIT_KEY)){
+    setTimeout(function(){ modal.classList.add('open'); }, 600);
+  }
+
+  document.querySelectorAll('.visit-options button').forEach(function(btn){
+    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-intent')); });
+  });
+  document.getElementById('visit-close').addEventListener('click', function(){ closeModal(null); });
 </script>
 </body>
 </html>
