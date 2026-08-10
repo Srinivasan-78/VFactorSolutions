@@ -287,8 +287,8 @@
 
   footer{border-top:1px solid var(--line);padding:32px 0;}
   .foot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;gap:10px;}
-  #visit-count-wrap{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
-  #visit-count-wrap i{font-size:14px;}
+  #visit-count-wrap{display:flex;align-items:center;}
+  #visit-count-wrap img{height:20px;display:block;border-radius:4px;}
 
   /* first-visit modal */
   .visit-modal{
@@ -601,7 +601,7 @@
       <div class="review-form">
         <h3>Leave a review</h3>
         <p class="hint">Worked with vFactor? Share your experience — it goes straight to Vijay's inbox for review before it's published.</p>
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <form action="https://formspree.io/f/xrpzzlaz" method="POST">
           <label for="rv-name">Name</label>
           <input id="rv-name" name="name" type="text" required>
           <label for="rv-org">Company (optional)</label>
@@ -651,7 +651,7 @@
 <footer>
   <div class="wrap foot-row">
     <div>© 2026 vFactor Solutions. All rights reserved.</div>
-    <div id="visit-count-wrap"><i class="ti ti-eye" aria-hidden="true"></i> <span id="visit-count">—</span> visits</div>
+    <div id="visit-count-wrap"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fvfactorsolutions.com&count_bg=%232E5C40&title_bg=%231D2422&icon=&icon_color=%23E7E7E7&title=visits&edge_flat=false" alt="site visit count"></div>
     <div>Recruitment · RPO · Lead Generation</div>
   </div>
 </footer>
@@ -684,24 +684,12 @@
     localStorage.setItem('vfactor-theme', next);
   });
 
-  // Visit counter — free public counter, no signup required
-  fetch('https://api.countapi.xyz/hit/vfactorsolutions-com/site-visits')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      var el = document.getElementById('visit-count');
-      if(el) el.textContent = data.value.toLocaleString();
-    })
-    .catch(function(){
-      var wrap = document.getElementById('visit-count-wrap');
-      if(wrap) wrap.style.display = 'none';
-    });
-
   // First-visit intent prompt + email ping (per-browser "unique", via Formspree)
   var VISIT_KEY = 'vfactor_visited';
   var modal = document.getElementById('visit-modal');
 
   function notifyNewVisitor(intent){
-    fetch('https://formspree.io/f/YOUR_VISITOR_FORM_ID', {
+    fetch('https://formspree.io/f/xrpzzlaz', {
       method:'POST',
       headers:{'Accept':'application/json','Content-Type':'application/json'},
       body: JSON.stringify({
