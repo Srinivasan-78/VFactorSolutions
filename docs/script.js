@@ -4,6 +4,7 @@ entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in');
 }, {threshold:.12});
 els.forEach(function(el){ io.observe(el); });
 
+var navLinksEl = document.querySelector('.navlinks');
 var navLinks = document.querySelectorAll('.navlinks a');
 var navSections = Array.prototype.map.call(navLinks, function(a){ return document.querySelector(a.getAttribute('href')); });
 var navIo = new IntersectionObserver(function(entries){
@@ -16,6 +17,21 @@ if(idx > -1) navLinks[idx].classList.add('active');
 });
 }, {rootMargin:'-45% 0px -45% 0px'});
 navSections.forEach(function(s){ if(s) navIo.observe(s); });
+
+// Mobile nav toggle
+var navToggle = document.getElementById('nav-toggle');
+if(navToggle && navLinksEl){
+navToggle.addEventListener('click', function(){
+var isOpen = navLinksEl.classList.toggle('mobile-open');
+navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+navLinks.forEach(function(a){
+a.addEventListener('click', function(){
+navLinksEl.classList.remove('mobile-open');
+navToggle.setAttribute('aria-expanded', 'false');
+});
+});
+}
 
 var toggle = document.getElementById('theme-toggle');
 toggle.addEventListener('click', function(){
@@ -68,6 +84,7 @@ document.getElementById('visit-close').addEventListener('click', closeModal);
 
 // ATS resume checker
 var ATS_STOPWORDS = new Set(['the','and','for','with','you','are','this','that','will','have','has','from','your','our','job','role','team','work','able','who','using','into','over','under','years','experience','skills','required','preferred','responsibilities','requirements','about','ability','strong','including']);
+var ATS_MAX_BYTES = 10 * 1024 * 1024;
 
 var atsLibsPromise = null;
 function atsLoadScript(src){
@@ -160,9 +177,11 @@ var fileInput = document.getElementById('ats-file');
 var jd = document.getElementById('ats-jd').value;
 var out = document.getElementById('ats-result');
 if(!fileInput.files.length){ out.innerHTML = '<p style="color:var(--signal);">Upload a resume file first.</p>'; return; }
+var file = fileInput.files[0];
+if(file.size > ATS_MAX_BYTES){ out.innerHTML = '<p style="color:var(--signal);">That file is larger than 10MB — try a smaller one.</p>'; return; }
 out.innerHTML = '<p style="color:var(--ink-soft);">Analyzing…</p>';
 try{
-var text = await atsExtractText(fileInput.files[0]);
+var text = await atsExtractText(file);
 var result = atsScore(text, jd);
 var color = result.score>=75 ? 'var(--field)' : result.score>=50 ? 'var(--star)' : 'var(--signal)';
 var html = '<div class="ats-score" style="color:'+color+';">'+result.score+'<span style="font-size:18px;color:var(--ink-soft);">/100</span></div>';
