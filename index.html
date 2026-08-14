@@ -5,675 +5,745 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>vFactor Solutions — Recruitment, RPO & Lead Generation</title>
 <script>
-  (function(){
-    var saved = localStorage.getItem('vfactor-theme');
-    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  })();
+(function(){
+var saved = localStorage.getItem('vfactor-theme');
+var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+document.documentElement.setAttribute('data-theme', theme);
+})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <style>
-  :root{
-    --ink:#1D2422;
-    --ink-soft:#59635C;
-    --paper:#EFF1EA;
-    --paper-raised:#FFFFFF;
-    --field:#2E5C40;
-    --field-deep:#1E4530;
-    --signal:#C23B2E;
-    --star:#B8862A;
-    --line:#DBDFD3;
-    --line-strong:#C3C9B8;
-    --surface-inverse:#1D2422;
-    --text-inverse:#F1EFE6;
-    --text-inverse-soft:#B7C0B7;
-    --field-tint:#E1EBE3;
-    --signal-tint:#F6E1DD;
-  }
-  [data-theme="dark"]{
-    --ink:#ECEFE9;
-    --ink-soft:#A8B2A9;
-    --paper:#10140F;
-    --paper-raised:#181D16;
-    --field:#7BB98F;
-    --field-deep:#A3D3B2;
-    --signal:#E2604F;
-    --star:#D6A247;
-    --line:#28322A;
-    --line-strong:#3A473C;
-    --surface-inverse:#0B0F0B;
-    --text-inverse:#EFEEE4;
-    --text-inverse-soft:#AAB4AB;
-    --field-tint:#1B2A20;
-    --signal-tint:#331E1A;
-  }
-  :root{ --ease:cubic-bezier(.65,0,.35,1); --dur:.6s; --radius:14px; --radius-sm:9px; --shadow-card:0 1px 2px rgba(20,30,20,.05),0 10px 26px rgba(20,30,20,.07); }
-  *{transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),fill var(--dur) var(--ease),stroke var(--dur) var(--ease);}
-  html{transition:background-color var(--dur) var(--ease);}
-  body{transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease);}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-size:16px;
-    line-height:1.6;
-  }
-  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);}
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--field-deep);
-  }
-  a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
-
-  /* ring signature element */
-  .ring{
-    display:inline-block;width:9px;height:9px;border-radius:50%;
-    border:1.5px solid var(--field);position:relative;flex-shrink:0;
-  }
-  .ring::after{
-    content:"";position:absolute;inset:-5px;border:1px solid var(--line-strong);border-radius:50%;
-  }
-
-  /* header */
-  header{
-    position:sticky;top:0;z-index:20;
-    background:var(--paper);backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1120px;margin:0 auto;}
-  .brand{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:.01em;}
-  .brand span{color:var(--signal);}
-  .navlinks{display:flex;gap:28px;font-size:14px;color:var(--ink-soft);}
-  .navlinks a:hover{color:var(--ink);}
-  .nav-cta{
-    font-size:13px;font-weight:600;border:1px solid var(--ink);padding:8px 16px;border-radius:var(--radius-sm);
-  }
-  .nav-cta:hover{background:var(--ink);color:var(--paper);}
-  .theme-toggle{
-    width:36px;height:36px;border:1px solid var(--line-strong);border-radius:50%;
-    display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
-    background:var(--paper-raised);color:var(--ink-soft);font-size:16px;position:relative;
-    transition:border-color .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
-  }
-  .theme-toggle:hover{border-color:var(--field);color:var(--field);transform:rotate(14deg);}
-  .theme-toggle i{position:absolute;transition:opacity .5s var(--ease),transform .5s var(--ease);}
-  .theme-toggle .ti-moon{opacity:0;transform:rotate(-60deg) scale(.5);}
-  .theme-toggle .ti-sun{opacity:1;transform:rotate(0) scale(1);}
-  [data-theme="dark"] .theme-toggle .ti-sun{opacity:0;transform:rotate(60deg) scale(.5);}
-  [data-theme="dark"] .theme-toggle .ti-moon{opacity:1;transform:rotate(0) scale(1);}
-
-  /* hero */
-  .hero{position:relative;overflow:hidden;padding:96px 0 100px;}
-  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
-  .hero h1{font-size:52px;line-height:1.08;letter-spacing:-.01em;margin:18px 0 24px;}
-  .hero h1 em{font-style:italic;color:var(--field-deep);}
-  .hero p.lede{font-size:18px;color:var(--ink-soft);max-width:46ch;margin-bottom:34px;}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-  .btn{
-    font-size:14px;font-weight:600;padding:13px 24px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
-  }
-  .btn-primary{background:var(--field);color:#FFFFFF;}
-  .btn-primary:hover{filter:brightness(.9);}
-  .btn{transition:transform .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),filter .35s var(--ease);}
-  .btn:hover{transform:translateY(-3px);}
-  .btn-ghost{border:1px solid var(--line-strong);}
-  .btn-ghost:hover{border-color:var(--ink);}
-
-  .target{width:100%;max-width:420px;justify-self:center;}
-  .target circle{fill:none;stroke:var(--line-strong);}
-  .target .tick{stroke:var(--line-strong);}
-  .target .c1{stroke:var(--signal);stroke-width:1.4;}
-  .target .dot{fill:var(--signal);}
-  @keyframes pulse-ring{0%{r:7;opacity:1;}70%{r:36;opacity:0;}100%{r:36;opacity:0;}}
-  .target .pulse{fill:none;stroke:var(--signal);stroke-width:2;transform-origin:200px 200px;animation:pulse-ring 2.4s ease-out infinite;}
-
-  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px;}
-  .stat-strip div{background:var(--paper-raised);padding:22px 20px;}
-  .stat-strip b{display:block;font-family:'Fraunces',serif;font-size:28px;font-weight:600;}
-  .stat-strip span{font-size:12.5px;color:var(--ink-soft);}
-
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
-  .reveal.in{opacity:1;transform:translateY(0);}
-
-  .service-card,.edge-card,.edu-card{transition:transform .4s var(--ease),box-shadow .4s var(--ease),background-color var(--dur) var(--ease);}
-  .service-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,33,61,.1);}
-  .edge-card:hover h3{color:var(--field-deep);}
-
-  /* nav active state */
-  .navlinks a{position:relative;padding-bottom:4px;transition:color .3s var(--ease);}
-  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--field-deep);transition:width .4s var(--ease);}
-  .navlinks a.active{color:var(--ink);}
-  .navlinks a.active::after{width:100%;}
-
-  /* expertise / skills */
-  .skill-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  .skill-group{background:var(--paper-raised);padding:28px 26px;display:flex;align-items:center;gap:12px;}
-  .skill-group h3{font-size:16px;}
-  .skill-list{display:flex;flex-direction:column;gap:12px;}
-  .skill-list li{list-style:none;display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink-soft);}
-  .skill-list li .ring{margin-top:6px;}
-
-  /* reviews */
-  .reviews-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
-  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  .review-card{background:var(--paper-raised);padding:24px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);}
-  .review-stars{color:var(--star);font-size:14px;margin-bottom:10px;letter-spacing:2px;}
-  .review-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:14px;}
-  .review-who{font-size:13px;font-weight:600;color:var(--ink);}
-  .review-form{border:1px solid var(--line);background:var(--paper-raised);padding:28px;border-radius:var(--radius);box-shadow:var(--shadow-card);}
-  .review-form h3{font-size:18px;margin-bottom:6px;}
-  .review-form p.hint{font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
-  .review-form label{display:block;font-size:12.5px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:6px;}
-  .review-form input,.review-form textarea{
-    width:100%;font-family:'Inter',sans-serif;font-size:14.5px;padding:11px 12px;
-    border:1px solid var(--line-strong);background:var(--paper);margin-bottom:16px;border-radius:var(--radius-sm);color:var(--ink);
-  }
-  .review-form input:focus,.review-form textarea:focus{outline:none;border-color:var(--field);}
-  .review-form textarea{resize:vertical;min-height:90px;}
-  .review-form button{width:100%;cursor:pointer;font-family:'Inter';}
-
-  /* sections */
-  section{padding:88px 0;border-top:1px solid var(--line);}
-  .section-head{max-width:640px;margin-bottom:48px;}
-  .section-head h2{font-size:34px;margin-top:10px;}
-  .section-head p{color:var(--ink-soft);margin-top:14px;font-size:16px;}
-
-  /* services */
-  .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-  .service-card{background:var(--paper-raised);padding:32px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);}
-  .service-card h3{font-size:20px;margin-bottom:10px;}
-  .service-card p{color:var(--ink-soft);font-size:15px;margin-bottom:16px;}
-  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
-  .tag{
-    font-size:12px;font-family:'IBM Plex Mono',monospace;border:none;background:var(--field-tint);
-    padding:6px 13px;border-radius:999px;color:var(--field-deep);
-  }
-
-  /* why vfactor */
-  .edge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
-  .edge-card{padding:0;}
-  .edge-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--field-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-  .edge-card h3{font-size:18px;margin-bottom:10px;}
-  .edge-card p{color:var(--ink-soft);font-size:14.5px;}
-
-  /* founder */
-  .founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;}
-  .founder-card{
-    background:var(--surface-inverse);color:var(--text-inverse);padding:36px;border-radius:var(--radius);
-  }
-  .founder-photo{
-    width:108px;height:108px;border-radius:50%;object-fit:cover;object-position:center 20%;
-    border:2px solid rgba(255,255,255,.18);display:block;margin-bottom:18px;
-  }
-  .founder-card .eyebrow{color:var(--signal);}
-  .founder-card h3{color:var(--text-inverse);font-size:24px;margin:12px 0 6px;}
-  .founder-card .role{color:var(--text-inverse-soft);font-size:14px;margin-bottom:22px;}
-  .founder-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px;}
-  .founder-stats div b{display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--text-inverse);}
-  .founder-stats div span{font-size:12.5px;color:var(--text-inverse-soft);}
-  .founder-links{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-size:14px;}
-  .founder-links a{display:flex;align-items:center;gap:10px;color:var(--text-inverse);}
-  .founder-links a:hover{color:var(--signal);}
-
-  .timeline{border-left:1px solid var(--line-strong);padding-left:26px;display:flex;flex-direction:column;gap:26px;}
-  .tl-item{position:relative;}
-  .tl-item::before{
-    content:"";position:absolute;left:-31px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--field);
-    box-shadow:0 0 0 3px var(--paper);
-  }
-  .tl-item .yr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--field-deep);}
-  .tl-item h4{font-size:17px;margin:4px 0 6px;}
-  .tl-item p{color:var(--ink-soft);font-size:14.5px;}
-
-  .earlier{margin-top:36px;padding-top:26px;border-top:1px solid var(--line);}
-  .earlier .eyebrow{margin-bottom:12px;}
-  .earlier-row{display:flex;flex-wrap:wrap;gap:10px;}
-  .earlier-row span{font-size:13.5px;border:1px solid var(--line-strong);padding:7px 14px;border-radius:999px;}
-
-  .founder-bio{margin-top:40px;}
-  .founder-bio h3{font-size:22px;margin-bottom:16px;}
-  .bio-list{display:flex;flex-direction:column;gap:14px;}
-  .bio-list li{list-style:none;display:flex;gap:12px;font-size:15px;color:var(--ink-soft);}
-  .bio-list li .ring{margin-top:7px;}
-
-  /* education */
-  .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .edu-card{border:1px solid var(--line);padding:24px;background:var(--paper-raised);}
-  .edu-card .eyebrow{margin-bottom:10px;}
-  .edu-card h4{font-size:16px;line-height:1.4;}
-  .edu-card p{font-size:13.5px;color:var(--ink-soft);margin-top:6px;}
-
-  /* testimonial */
-  .testimonial{
-    background:var(--paper-raised);border:1px solid var(--line);padding:48px;position:relative;
-  }
-  .testimonial p{font-family:'Fraunces',serif;font-size:22px;line-height:1.5;font-style:italic;color:var(--ink);max-width:70ch;}
-  .testimonial .who{margin-top:22px;font-family:'Inter';font-style:normal;font-size:14px;color:var(--ink-soft);}
-
-  /* contact */
-  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
-  .contact-card{
-    background:var(--surface-inverse);color:var(--text-inverse);padding:40px;border-radius:var(--radius);
-  }
-  .contact-card h3{color:var(--text-inverse);font-size:24px;margin-bottom:8px;}
-  .contact-card p{color:var(--text-inverse-soft);font-size:14.5px;margin-bottom:28px;}
-  .clink{
-    display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(255,255,255,.16);font-size:15px;color:var(--text-inverse);
-  }
-  .clink:first-of-type{border-top:1px solid rgba(255,255,255,.16);}
-  .clink:hover{color:var(--signal);}
-  .clink small{display:block;color:var(--text-inverse-soft);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:3px;}
-  .contact-side{display:flex;flex-direction:column;justify-content:center;}
-  .contact-side p{color:var(--ink-soft);font-size:15px;margin-bottom:20px;}
-  .contact-side .btn{align-self:flex-start;}
-
-  footer{border-top:1px solid var(--line);padding:32px 0;}
-  .foot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;gap:10px;}
-  #visit-count-wrap{display:flex;align-items:center;}
-  #visit-count-wrap img{height:20px;display:block;border-radius:4px;}
-
-  /* first-visit modal */
-  .visit-modal{
-    position:fixed;inset:0;background:rgba(10,14,10,.55);backdrop-filter:blur(3px);
-    display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;
-    opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
-  }
-  .visit-modal.open{opacity:1;pointer-events:auto;}
-  .visit-modal-card{
-    background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);
-    padding:34px;max-width:420px;width:100%;position:relative;
-    transform:translateY(14px) scale(.97);transition:transform .4s var(--ease);
-  }
-  .visit-modal.open .visit-modal-card{transform:translateY(0) scale(1);}
-  .visit-modal-card h3{font-size:22px;margin:8px 0 8px;}
-  .visit-modal-card p{color:var(--ink-soft);font-size:14px;margin-bottom:22px;}
-  .visit-close{
-    position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;
-    color:var(--ink-soft);cursor:pointer;line-height:1;padding:4px;
-  }
-  .visit-close:hover{color:var(--ink);}
-  .visit-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .visit-options button{
-    font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:12px 10px;
-    border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:999px;
-    cursor:pointer;transition:border-color .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
-  }
-  .visit-options button:hover{border-color:var(--field);background:var(--field-tint);color:var(--field-deep);}
-  @media (max-width:480px){ .visit-options{grid-template-columns:1fr;} }
-
-  @media (max-width:860px){
-    .hero-grid{grid-template-columns:1fr;}
-    .target{display:none;}
-    .hero h1{font-size:38px;}
-    .stat-strip{grid-template-columns:repeat(2,1fr);}
-    .service-grid{grid-template-columns:1fr;}
-    .edge-grid{grid-template-columns:repeat(2,1fr);}
-    .founder{grid-template-columns:1fr;}
-    .skill-groups{grid-template-columns:1fr 1fr;}
-    .reviews-wrap{grid-template-columns:1fr;}
-    .review-grid{grid-template-columns:1fr;}
-    .edu-grid{grid-template-columns:1fr;}
-    .contact-wrap{grid-template-columns:1fr;}
-    .navlinks{display:none;}
-  }
+:root{
+--ink:#1D2422;
+--ink-soft:#59635C;
+--paper:#EFF1EA;
+--paper-raised:#FFFFFF;
+--field:#2E5C40;
+--field-deep:#1E4530;
+--signal:#C23B2E;
+--star:#B8862A;
+--line:#DBDFD3;
+--line-strong:#C3C9B8;
+--surface-inverse:#1D2422;
+--text-inverse:#F1EFE6;
+--text-inverse-soft:#B7C0B7;
+--field-tint:#E1EBE3;
+--signal-tint:#F6E1DD;
+}
+[data-theme="dark"]{
+--ink:#ECEFE9;
+--ink-soft:#A8B2A9;
+--paper:#10140F;
+--paper-raised:#181D16;
+--field:#7BB98F;
+--field-deep:#A3D3B2;
+--signal:#E2604F;
+--star:#D6A247;
+--line:#28322A;
+--line-strong:#3A473C;
+--surface-inverse:#0B0F0B;
+--text-inverse:#EFEEE4;
+--text-inverse-soft:#AAB4AB;
+--field-tint:#1B2A20;
+--signal-tint:#331E1A;
+}
+:root{ --ease:cubic-bezier(.65,0,.35,1); --dur:.6s; --radius:14px; --radius-sm:9px; --shadow-card:0 1px 2px rgba(20,30,20,.05),0 10px 26px rgba(20,30,20,.07); }
+*{transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),fill var(--dur) var(--ease),stroke var(--dur) var(--ease);}
+html{transition:background-color var(--dur) var(--ease);}
+body{transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+background:var(--paper);
+color:var(--ink);
+font-family:'Inter',sans-serif;
+font-size:16px;
+line-height:1.6;
+}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);}
+.eyebrow{
+font-family:'IBM Plex Mono',monospace;
+font-size:12px;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--field-deep);
+}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+/* ring signature element */
+.ring{
+display:inline-block;width:9px;height:9px;border-radius:50%;
+border:1.5px solid var(--field);position:relative;flex-shrink:0;
+}
+.ring::after{
+content:"";position:absolute;inset:-5px;border:1px solid var(--line-strong);border-radius:50%;
+}
+/* header */
+header{
+position:sticky;top:0;z-index:20;
+background:var(--paper);backdrop-filter:blur(6px);
+border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1120px;margin:0 auto;}
+.brand{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:.01em;}
+.brand span{color:var(--signal);}
+.navlinks{display:flex;gap:28px;font-size:14px;color:var(--ink-soft);}
+.navlinks a:hover{color:var(--ink);}
+.nav-cta{
+font-size:13px;font-weight:600;border:1px solid var(--ink);padding:8px 16px;border-radius:var(--radius-sm);
+}
+.nav-cta:hover{background:var(--ink);color:var(--paper);}
+.theme-toggle{
+width:36px;height:36px;border:1px solid var(--line-strong);border-radius:50%;
+display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+background:var(--paper-raised);color:var(--ink-soft);font-size:16px;position:relative;
+transition:border-color .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+}
+.theme-toggle:hover{border-color:var(--field);color:var(--field);transform:rotate(14deg);}
+.theme-toggle i{position:absolute;transition:opacity .5s var(--ease),transform .5s var(--ease);}
+.theme-toggle .ti-moon{opacity:0;transform:rotate(-60deg) scale(.5);}
+.theme-toggle .ti-sun{opacity:1;transform:rotate(0) scale(1);}
+[data-theme="dark"] .theme-toggle .ti-sun{opacity:0;transform:rotate(60deg) scale(.5);}
+[data-theme="dark"] .theme-toggle .ti-moon{opacity:1;transform:rotate(0) scale(1);}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:96px 0 100px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+.hero h1{font-size:52px;line-height:1.08;letter-spacing:-.01em;margin:18px 0 24px;}
+.hero h1 em{font-style:italic;color:var(--field-deep);}
+.hero p.lede{font-size:18px;color:var(--ink-soft);max-width:46ch;margin-bottom:34px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+font-size:14px;font-weight:600;padding:13px 24px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--field);color:#FFFFFF;}
+.btn-primary:hover{filter:brightness(.9);}
+.btn{transition:transform .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),filter .35s var(--ease);}
+.btn:hover{transform:translateY(-3px);}
+.btn-ghost{border:1px solid var(--line-strong);}
+.btn-ghost:hover{border-color:var(--ink);}
+.target{width:100%;max-width:420px;justify-self:center;}
+.target circle{fill:none;stroke:var(--line-strong);}
+.target .tick{stroke:var(--line-strong);}
+.target .c1{stroke:var(--signal);stroke-width:1.4;}
+.target .dot{fill:var(--signal);}
+@keyframes pulse-ring{0%{r:7;opacity:1;}70%{r:36;opacity:0;}100%{r:36;opacity:0;}}
+.target .pulse{fill:none;stroke:var(--signal);stroke-width:2;transform-origin:200px 200px;animation:pulse-ring 2.4s ease-out infinite;}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px;}
+.stat-strip div{background:var(--paper-raised);padding:22px 20px;}
+.stat-strip b{display:block;font-family:'Fraunces',serif;font-size:28px;font-weight:600;}
+.stat-strip span{font-size:12.5px;color:var(--ink-soft);}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.service-card,.edge-card,.edu-card{transition:transform .4s var(--ease),box-shadow .4s var(--ease),background-color var(--dur) var(--ease);}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,33,61,.1);}
+.edge-card:hover h3{color:var(--field-deep);}
+/* nav active state */
+.navlinks a{position:relative;padding-bottom:4px;transition:color .3s var(--ease);}
+.navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--field-deep);transition:width .4s var(--ease);}
+.navlinks a.active{color:var(--ink);}
+.navlinks a.active::after{width:100%;}
+/* expertise / skills */
+.skill-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.skill-group{background:var(--paper-raised);padding:28px 26px;display:flex;align-items:center;gap:12px;}
+.skill-group h3{font-size:16px;}
+.skill-list{display:flex;flex-direction:column;gap:12px;}
+.skill-list li{list-style:none;display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink-soft);}
+.skill-list li .ring{margin-top:6px;}
+/* reviews */
+.reviews-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.review-card{background:var(--paper-raised);padding:24px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);}
+.review-stars{color:var(--star);font-size:14px;margin-bottom:10px;letter-spacing:2px;}
+.review-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:14px;}
+.review-who{font-size:13px;font-weight:600;color:var(--ink);}
+.review-form{border:1px solid var(--line);background:var(--paper-raised);padding:28px;border-radius:var(--radius);box-shadow:var(--shadow-card);}
+.review-form h3{font-size:18px;margin-bottom:6px;}
+.review-form p.hint{font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+.review-form label{display:block;font-size:12.5px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:6px;}
+.review-form input,.review-form textarea{
+width:100%;font-family:'Inter',sans-serif;font-size:14.5px;padding:11px 12px;
+border:1px solid var(--line-strong);background:var(--paper);margin-bottom:16px;border-radius:var(--radius-sm);color:var(--ink);
+}
+.review-form input:focus,.review-form textarea:focus{outline:none;border-color:var(--field);}
+.review-form textarea{resize:vertical;min-height:90px;}
+.review-form button{width:100%;cursor:pointer;font-family:'Inter';}
+/* sections */
+section{padding:88px 0;border-top:1px solid var(--line);}
+.section-head{max-width:640px;margin-bottom:48px;}
+.section-head h2{font-size:34px;margin-top:10px;}
+.section-head p{color:var(--ink-soft);margin-top:14px;font-size:16px;}
+/* services */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.service-card{background:var(--paper-raised);padding:32px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);}
+.service-card h3{font-size:20px;margin-bottom:10px;}
+.service-card p{color:var(--ink-soft);font-size:15px;margin-bottom:16px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{
+font-size:12px;font-family:'IBM Plex Mono',monospace;border:none;background:var(--field-tint);
+padding:6px 13px;border-radius:999px;color:var(--field-deep);
+}
+/* why vfactor */
+.edge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.edge-card{padding:0;}
+.edge-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--field-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.edge-card h3{font-size:18px;margin-bottom:10px;}
+.edge-card p{color:var(--ink-soft);font-size:14.5px;}
+/* founder */
+.founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;}
+.founder-card{
+background:var(--surface-inverse);color:var(--text-inverse);padding:36px;border-radius:var(--radius);
+}
+.founder-photo{
+width:108px;height:108px;border-radius:50%;object-fit:cover;object-position:center 20%;
+border:2px solid rgba(255,255,255,.18);display:block;margin-bottom:18px;
+}
+.founder-card .eyebrow{color:var(--signal);}
+.founder-card h3{color:var(--text-inverse);font-size:24px;margin:12px 0 6px;}
+.founder-card .role{color:var(--text-inverse-soft);font-size:14px;margin-bottom:22px;}
+.founder-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px;}
+.founder-stats div b{display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--text-inverse);}
+.founder-stats div span{font-size:12.5px;color:var(--text-inverse-soft);}
+.founder-links{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-size:14px;}
+.founder-links a{display:flex;align-items:center;gap:10px;color:var(--text-inverse);}
+.founder-links a:hover{color:var(--signal);}
+.timeline{border-left:1px solid var(--line-strong);padding-left:26px;display:flex;flex-direction:column;gap:26px;}
+.tl-item{position:relative;}
+.tl-item::before{
+content:"";position:absolute;left:-31px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--field);
+box-shadow:0 0 0 3px var(--paper);
+}
+.tl-item .yr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--field-deep);}
+.tl-item h4{font-size:17px;margin:4px 0 6px;}
+.tl-item p{color:var(--ink-soft);font-size:14.5px;}
+.earlier{margin-top:36px;padding-top:26px;border-top:1px solid var(--line);}
+.earlier .eyebrow{margin-bottom:12px;}
+.earlier-row{display:flex;flex-wrap:wrap;gap:10px;}
+.earlier-row span{font-size:13.5px;border:1px solid var(--line-strong);padding:7px 14px;border-radius:999px;}
+.founder-bio{margin-top:40px;}
+.founder-bio h3{font-size:22px;margin-bottom:16px;}
+.bio-list{display:flex;flex-direction:column;gap:14px;}
+.bio-list li{list-style:none;display:flex;gap:12px;font-size:15px;color:var(--ink-soft);}
+.bio-list li .ring{margin-top:7px;}
+/* education */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.edu-card{border:1px solid var(--line);padding:24px;background:var(--paper-raised);}
+.edu-card .eyebrow{margin-bottom:10px;}
+.edu-card h4{font-size:16px;line-height:1.4;}
+.edu-card p{font-size:13.5px;color:var(--ink-soft);margin-top:6px;}
+/* testimonial */
+.testimonial{
+background:var(--paper-raised);border:1px solid var(--line);padding:48px;position:relative;
+}
+.testimonial p{font-family:'Fraunces',serif;font-size:22px;line-height:1.5;font-style:italic;color:var(--ink);max-width:70ch;}
+.testimonial .who{margin-top:22px;font-family:'Inter';font-style:normal;font-size:14px;color:var(--ink-soft);}
+/* contact */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.contact-card{
+background:var(--surface-inverse);color:var(--text-inverse);padding:40px;border-radius:var(--radius);
+}
+.contact-card h3{color:var(--text-inverse);font-size:24px;margin-bottom:8px;}
+.contact-card p{color:var(--text-inverse-soft);font-size:14.5px;margin-bottom:28px;}
+.clink{
+display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(255,255,255,.16);font-size:15px;color:var(--text-inverse);
+}
+.clink:first-of-type{border-top:1px solid rgba(255,255,255,.16);}
+.clink:hover{color:var(--signal);}
+.clink small{display:block;color:var(--text-inverse-soft);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:3px;}
+.contact-side{display:flex;flex-direction:column;justify-content:center;}
+.contact-side p{color:var(--ink-soft);font-size:15px;margin-bottom:20px;}
+.contact-side .btn{align-self:flex-start;}
+footer{border-top:1px solid var(--line);padding:32px 0;}
+.foot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;gap:10px;}
+#visit-count-wrap{display:flex;align-items:center;}
+#visit-count-wrap img{height:20px;display:block;border-radius:4px;}
+/* first-visit modal */
+.visit-modal{
+position:fixed;inset:0;background:rgba(10,14,10,.55);backdrop-filter:blur(3px);
+display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;
+opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.visit-modal.open{opacity:1;pointer-events:auto;}
+.visit-modal-card{
+background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card);
+padding:34px;max-width:420px;width:100%;position:relative;
+transform:translateY(14px) scale(.97);transition:transform .4s var(--ease);
+}
+.visit-modal.open .visit-modal-card{transform:translateY(0) scale(1);}
+.visit-modal-card h3{font-size:22px;margin:8px 0 8px;}
+.visit-modal-card p{color:var(--ink-soft);font-size:14px;margin-bottom:22px;}
+.visit-close{
+position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;
+color:var(--ink-soft);cursor:pointer;line-height:1;padding:4px;
+}
+.visit-close:hover{color:var(--ink);}
+.visit-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.visit-options button{
+font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:12px 10px;
+border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:999px;
+cursor:pointer;transition:border-color .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+}
+.visit-options button:hover{border-color:var(--field);background:var(--field-tint);color:var(--field-deep);}
+@media (max-width:480px){ .visit-options{grid-template-columns:1fr;} }
+/* ATS resume checker */
+.ats-score{font-family:'Fraunces',serif;font-size:40px;font-weight:600;}
+.ats-check-list{display:flex;flex-direction:column;gap:14px;margin-top:16px;}
+.ats-check-list li{list-style:none;display:flex;gap:12px;font-size:15px;color:var(--ink-soft);}
+.ats-check-list li .mark{font-weight:600;flex-shrink:0;}
+@media (max-width:860px){
+.hero-grid{grid-template-columns:1fr;}
+.target{display:none;}
+.hero h1{font-size:38px;}
+.stat-strip{grid-template-columns:repeat(2,1fr);}
+.service-grid{grid-template-columns:1fr;}
+.edge-grid{grid-template-columns:repeat(2,1fr);}
+.founder{grid-template-columns:1fr;}
+.skill-groups{grid-template-columns:1fr 1fr;}
+.reviews-wrap{grid-template-columns:1fr;}
+.review-grid{grid-template-columns:1fr;}
+.edu-grid{grid-template-columns:1fr;}
+.contact-wrap{grid-template-columns:1fr;}
+.navlinks{display:none;}
+}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="nav">
-    <div class="brand">vFactor<span>.</span></div>
-    <nav class="navlinks">
-      <a href="#services">Services</a>
-      <a href="#edge">Why vFactor</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#founder">Founder</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" style="margin-left:14px;margin-right:0;">
-      <i class="ti ti-sun" aria-hidden="true"></i>
-      <i class="ti ti-moon" aria-hidden="true"></i>
-    </button>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow">Recruitment · RPO · Lead Generation</div>
-        <h1>Stop sifting resumes. Start hiring with <em>bulls-eye</em> precision.</h1>
-        <p class="lede">vFactor Solutions is an independent recruitment outsourcing and lead-generation practice built on three decades of sourcing engineering, technology and business talent across India and the US.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Get candidates, not resumes</a>
-          <a class="btn btn-ghost" href="#services">See services</a>
-        </div>
-      </div>
-      <svg class="target" viewBox="0 0 400 400">
-        <circle class="c1" cx="200" cy="200" r="170"/>
-        <circle cx="200" cy="200" r="128"/>
-        <circle cx="200" cy="200" r="86"/>
-        <circle cx="200" cy="200" r="44"/>
-        <circle class="pulse" cx="200" cy="200" r="7"/>
-        <circle class="dot" cx="200" cy="200" r="7"/>
-        <line x1="200" y1="10" x2="200" y2="60" class="tick"/>
-        <line x1="200" y1="340" x2="200" y2="390" class="tick"/>
-        <line x1="10" y1="200" x2="60" y2="200" class="tick"/>
-        <line x1="340" y1="200" x2="390" y2="200" class="tick"/>
-      </svg>
-    </div>
-    <div class="stat-strip">
-      <div><b>35+ yrs</b><span>Cross-industry experience</span></div>
-      <div><b>2</b><span>Markets — India and the US</span></div>
-      <div><b>6 yrs</b><span>EdTech domain experience</span></div>
-      <div><b>5</b><span>Sectors served</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="services" class="reveal">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">What we do</div>
-      <h2>Two levers. Real movement.</h2>
-      <p>vFactor is built to close the gaps left by conventional recruitment outsourcing — with validated data, direct accountability and no bloated retainer.</p>
-    </div>
-    <div class="service-grid">
-      <div class="service-card">
-        <h3>Recruitment, freshers to top management</h3>
-        <p>End-to-end sourcing across India for clients in IT, manufacturing, telecom, engineering and logistics.</p>
-        <div class="tag-row">
-          <span class="tag">Software technologies</span>
-          <span class="tag">Automobile / telecom</span>
-          <span class="tag">Finance and accounts</span>
-          <span class="tag">Human resource</span>
-          <span class="tag">Technical support</span>
-        </div>
-      </div>
-      <div class="service-card">
-        <h3>Lead generation</h3>
-        <p>Targeted, validated lead lists built around your customer base — or any data set your business needs to grow.</p>
-        <div class="tag-row">
-          <span class="tag">Targeted prospect data</span>
-          <span class="tag">Custom data builds</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="edge" class="reveal">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Why vFactor</div>
-      <h2>No bloat. No excuses. Just results.</h2>
-    </div>
-    <div class="edge-grid">
-      <div class="edge-card">
-        <div class="edge-num"><span class="ring"></span>Data validation</div>
-        <h3>Precise, every time</h3>
-        <p>Every candidate and lead is validated before it reaches you — barely any rejections.</p>
-      </div>
-      <div class="edge-card">
-        <div class="edge-num"><span class="ring"></span>Accountability</div>
-        <h3>Full ownership</h3>
-        <p>We take responsibility for every part of the engagement and resolve issues at the earliest possible time.</p>
-      </div>
-      <div class="edge-card">
-        <div class="edge-num"><span class="ring"></span>Professional</div>
-        <h3>Set by your standard</h3>
-        <p>We adapt to your expected standard rather than the market norm — transparent, flexible, sincere.</p>
-      </div>
-      <div class="edge-card">
-        <div class="edge-num"><span class="ring"></span>Economical</div>
-        <h3>Lower cost, same rigor</h3>
-        <p>We reduce cost to the client with the lowest service charges, without compromising quality.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="expertise" class="reveal">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Expertise</div>
-      <h2>Where we operate</h2>
-    </div>
-    <div class="skill-groups">
-      <div class="skill-group">
-        <span class="ring"></span>
-        <h3>Recruitment Services</h3>
-      </div>
-      <div class="skill-group">
-        <span class="ring"></span>
-        <h3>Client Lead Gen</h3>
-      </div>
-      <div class="skill-group">
-        <span class="ring"></span>
-        <h3>Recruiter Training</h3>
-      </div>
-      <div class="skill-group">
-        <span class="ring"></span>
-        <h3>EdTech Functions</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="founder" class="reveal">
-  <div class="wrap founder">
-    <div>
-      <div class="founder-card">
-        <img class="founder-photo" src="assets/founder.jpg" alt="Vijay Purushothaman, Founder of vFactor Solutions">
-        <div class="eyebrow">Founder</div>
-        <h3>Vijay Purushothaman</h3>
-        <div class="role">Business Leader — Recruitment &amp; HR Consulting, Customer Success, EdTech Operations</div>
-        <p style="color:var(--text-inverse-soft);font-size:14.5px;">35+ years across Recruitment &amp; HR Consulting, EdTech, Software Development, Manufacturing and Operations Management, in Indian and international markets.</p>
-        <div class="founder-stats">
-          <div><b>35+ yrs</b><span>Cross-industry experience</span></div>
-          <div><b>6+ yrs</b><span>Based in the United States</span></div>
-          <div><b>16 yrs</b><span>Country Head of Business, India</span></div>
-          <div><b>6 yrs</b><span>EdTech domain experience</span></div>
-        </div>
-        <div class="founder-links">
-          <a href="mailto:cpvijay25@gmail.com">cpvijay25@gmail.com</a>
-          <a href="tel:+919150462580">+91 91504 62580</a>
-          <a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">linkedin.com/in/vijay-purushothaman</a>
-        </div>
-      </div>
-
-      <div class="founder-bio">
-        <h3>About the founder</h3>
-        <ul class="bio-list">
-          <li><span class="ring"></span>First 7 years in manufacturing — TVS Suzuki, BPL Limited, Arvind Mills and Autolec (TVS Group) — across exports, marketing, operations, shipments and logistics, dealer network and sales campaigns.</li>
-          <li><span class="ring"></span>Next 22 years with a global software development and recruitment company spanning the US and India — 6+ years in the US on business development, account management, recruitment and operations, then 16 years in India as Country Head of Business.</li>
-          <li><span class="ring"></span>6 years in the EdTech domain, spanning BridgeLabz as Head of Customer Success / Head of Lateral Business (2019–2022) and vFactor's own training and EdTech operations (2022–present) — enrollment operations, student and college counseling, career guidance seminars and orientations, and lateral hiring for tech talent.</li>
-          <li><span class="ring"></span>Procured, architected and delivered offshore software projects built in Chennai, including a blood bank product, a recruitment portal and an event management platform.</li>
-          <li><span class="ring"></span>Ran domestic recruitment, software development delivery, and US and Australian staffing markets simultaneously.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div>
-      <div class="section-head" style="margin-bottom:32px;">
-        <div class="eyebrow">Career highlights</div>
-        <h2 style="font-size:28px;">Three decades, four defining roles</h2>
-      </div>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="yr">2022 — Present</div>
-          <h4>Independent Business Consultant, vFactor Solutions</h4>
-          <p>HR consulting and recruitment outsourcing; client acquisition and relationship management; IT recruitment from freshers to leadership; training and EdTech operations.</p>
-        </div>
-        <div class="tl-item">
-          <div class="yr">2019 — 2022</div>
-          <h4>Head of Customer Success / Head, Lateral Business — BridgeLabz</h4>
-          <p>Led customer success and enrollment operations; new client acquisition; managed counseling and lead generation teams; ran seminars, orientations and career guidance programs; built the lateral hiring vertical.</p>
-        </div>
-        <div class="tl-item">
-          <div class="yr">1999 — 2019</div>
-          <h4>Senior Vice President, Everest Consulting Group</h4>
-          <p>Led recruitment and business development across India and the US; managed offshore recruitment teams serving the US market; owned account management, software product development, operations and profitability; established processes and growth strategy across sectors.</p>
-        </div>
-      </div>
-
-      <div class="earlier">
-        <div class="eyebrow">Earlier career</div>
-        <div class="earlier-row">
-          <span>TVS Motor Company</span>
-          <span>BPL Limited</span>
-          <span>Arvind Fashions Limited</span>
-          <span>Autolec Industries</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="reviews" class="reveal">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Reviews</div>
-      <h2>What clients and colleagues say</h2>
-    </div>
-    <div class="reviews-wrap">
-      <div class="review-grid">
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"It has been many years since I personally know Vijay from vFactor Solutions, who has vast experience in sourcing software engineers for clients across India and the United States. I admire his dedication and determination to add value to his work."</p>
-          <div class="review-who">Antony — Project Manager and Architect, ex. Sports Mechanics</div>
-        </div>
-      </div>
-      <div class="review-form">
-        <h3>Leave a review</h3>
-        <p class="hint">Worked with vFactor? Share your experience — it goes straight to Vijay's inbox for review before it's published.</p>
-        <form action="https://formspree.io/f/mwleldkv" method="POST">
-          <label for="rv-name">Name</label>
-          <input id="rv-name" name="name" type="text" required>
-          <label for="rv-org">Company (optional)</label>
-          <input id="rv-org" name="company" type="text">
-          <label for="rv-review">Your review</label>
-          <textarea id="rv-review" name="review" required></textarea>
-          <button class="btn btn-primary" type="submit">Submit review</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="reveal">
-  <div class="wrap contact-wrap">
-    <div class="contact-card">
-      <div class="eyebrow">Get in touch</div>
-      <h3>Your next great hire starts here</h3>
-      <p>Reach out directly — every engagement starts with a conversation about what precision hiring looks like for you.</p>
-      <a class="clink" href="mailto:cpvijay25@gmail.com"><div><small>Email</small>cpvijay25@gmail.com</div></a>
-      <a class="clink" href="tel:+919150462580"><div><small>Phone</small>+91 91504 62580</div></a>
-      <a class="clink" href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener"><div><small>LinkedIn</small>linkedin.com/in/vijay-purushothaman</div></a>
-    </div>
-    <div class="contact-side">
-      <div class="eyebrow">Chennai, Tamil Nadu, India</div>
-      <p>Working with clients across IT, manufacturing, banking, finance and education — in Indian and international markets.</p>
-      <a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Email vFactor</a>
-    </div>
-  </div>
-</section>
-
-<div id="visit-modal" class="visit-modal">
-  <div class="visit-modal-card">
-    <button class="visit-close" id="visit-close" aria-label="Close">×</button>
-    <div class="eyebrow">Quick question</div>
-    <h3>What brings you here today?</h3>
-    <p>One tap — helps us know who's stopping by.</p>
-    <div class="visit-options">
-      <button data-intent="Hiring talent">Hiring talent</button>
-      <button data-intent="Looking for a role">Looking for a role</button>
-      <button data-intent="Lead generation">Lead generation</button>
-      <button data-intent="Just exploring">Just exploring</button>
-    </div>
-  </div>
+<div class="nav">
+<div class="brand">vFactor<span>.</span></div>
+<nav class="navlinks">
+<a href="#services">Services</a>
+<a href="#edge">Why vFactor</a>
+<a href="#expertise">Expertise</a>
+<a href="#founder">Founder</a>
+<a href="#reviews">Reviews</a>
+<a href="#ats">Resume Check</a>
+<a href="#contact">Contact</a>
+</nav>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" style="margin-left:14px;margin-right:0;">
+<i class="ti ti-sun" aria-hidden="true"></i>
+<i class="ti ti-moon" aria-hidden="true"></i>
+</button>
 </div>
-
+</header>
+<section class="hero">
+<div class="wrap">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Recruitment · RPO · Lead Generation</div>
+<h1>Stop sifting resumes. Start hiring with <em>bulls-eye</em> precision.</h1>
+<p class="lede">vFactor Solutions is an independent recruitment outsourcing and lead-generation practice built on three decades of sourcing engineering, technology and business talent across India and the US.</p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Get candidates, not resumes</a>
+<a class="btn btn-ghost" href="#services">See services</a>
+</div>
+</div>
+<svg class="target" viewBox="0 0 400 400">
+<circle class="c1" cx="200" cy="200" r="170"/>
+<circle cx="200" cy="200" r="128"/>
+<circle cx="200" cy="200" r="86"/>
+<circle cx="200" cy="200" r="44"/>
+<circle class="pulse" cx="200" cy="200" r="7"/>
+<circle class="dot" cx="200" cy="200" r="7"/>
+<line x1="200" y1="10" x2="200" y2="60" class="tick"/>
+<line x1="200" y1="340" x2="200" y2="390" class="tick"/>
+<line x1="10" y1="200" x2="60" y2="200" class="tick"/>
+<line x1="340" y1="200" x2="390" y2="200" class="tick"/>
+</svg>
+</div>
+<div class="stat-strip">
+<div><b>35+ yrs</b><span>Cross-industry experience</span></div>
+<div><b>2</b><span>Markets — India and the US</span></div>
+<div><b>6 yrs</b><span>EdTech domain experience</span></div>
+<div><b>5</b><span>Sectors served</span></div>
+</div>
+</div>
+</section>
+<section id="services" class="reveal">
+<div class="wrap">
+<div class="section-head">
+<div class="eyebrow">What we do</div>
+<h2>Two levers. Real movement.</h2>
+<p>vFactor is built to close the gaps left by conventional recruitment outsourcing — with validated data, direct accountability and no bloated retainer.</p>
+</div>
+<div class="service-grid">
+<div class="service-card">
+<h3>Recruitment, freshers to top management</h3>
+<p>End-to-end sourcing across India for clients in IT, manufacturing, telecom, engineering and logistics.</p>
+<div class="tag-row">
+<span class="tag">Software technologies</span>
+<span class="tag">Automobile / telecom</span>
+<span class="tag">Finance and accounts</span>
+<span class="tag">Human resource</span>
+<span class="tag">Technical support</span>
+</div>
+</div>
+<div class="service-card">
+<h3>Lead generation</h3>
+<p>Targeted, validated lead lists built around your customer base — or any data set your business needs to grow.</p>
+<div class="tag-row">
+<span class="tag">Targeted prospect data</span>
+<span class="tag">Custom data builds</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="edge" class="reveal">
+<div class="wrap">
+<div class="section-head">
+<div class="eyebrow">Why vFactor</div>
+<h2>No bloat. No excuses. Just results.</h2>
+</div>
+<div class="edge-grid">
+<div class="edge-card">
+<div class="edge-num"><span class="ring"></span>Data validation</div>
+<h3>Precise, every time</h3>
+<p>Every candidate and lead is validated before it reaches you — barely any rejections.</p>
+</div>
+<div class="edge-card">
+<div class="edge-num"><span class="ring"></span>Accountability</div>
+<h3>Full ownership</h3>
+<p>We take responsibility for every part of the engagement and resolve issues at the earliest possible time.</p>
+</div>
+<div class="edge-card">
+<div class="edge-num"><span class="ring"></span>Professional</div>
+<h3>Set by your standard</h3>
+<p>We adapt to your expected standard rather than the market norm — transparent, flexible, sincere.</p>
+</div>
+<div class="edge-card">
+<div class="edge-num"><span class="ring"></span>Economical</div>
+<h3>Lower cost, same rigor</h3>
+<p>We reduce cost to the client with the lowest service charges, without compromising quality.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="expertise" class="reveal">
+<div class="wrap">
+<div class="section-head">
+<div class="eyebrow">Expertise</div>
+<h2>Where we operate</h2>
+</div>
+<div class="skill-groups">
+<div class="skill-group">
+<span class="ring"></span>
+<h3>Recruitment Services</h3>
+</div>
+<div class="skill-group">
+<span class="ring"></span>
+<h3>Client Lead Gen</h3>
+</div>
+<div class="skill-group">
+<span class="ring"></span>
+<h3>Recruiter Training</h3>
+</div>
+<div class="skill-group">
+<span class="ring"></span>
+<h3>EdTech Functions</h3>
+</div>
+</div>
+</div>
+</section>
+<section id="founder" class="reveal">
+<div class="wrap founder">
+<div>
+<div class="founder-card">
+<img class="founder-photo" src="assets/founder.jpg" alt="Vijay Purushothaman, Founder of vFactor Solutions">
+<div class="eyebrow">Founder</div>
+<h3>Vijay Purushothaman</h3>
+<div class="role">Business Leader — Recruitment &amp; HR Consulting, Customer Success, EdTech Operations</div>
+<p style="color:var(--text-inverse-soft);font-size:14.5px;">35+ years across Recruitment &amp; HR Consulting, EdTech, Software Development, Manufacturing and Operations Management, in Indian and international markets.</p>
+<div class="founder-stats">
+<div><b>35+ yrs</b><span>Cross-industry experience</span></div>
+<div><b>6+ yrs</b><span>Based in the United States</span></div>
+<div><b>16 yrs</b><span>Country Head of Business, India</span></div>
+<div><b>6 yrs</b><span>EdTech domain experience</span></div>
+</div>
+<div class="founder-links">
+<a href="mailto:cpvijay25@gmail.com">cpvijay25@gmail.com</a>
+<a href="tel:+919150462580">+91 91504 62580</a>
+<a href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener">linkedin.com/in/vijay-purushothaman</a>
+</div>
+</div>
+<div class="founder-bio">
+<h3>About the founder</h3>
+<ul class="bio-list">
+<li><span class="ring"></span>First 7 years in manufacturing — TVS Suzuki, BPL Limited, Arvind Mills and Autolec (TVS Group) — across exports, marketing, operations, shipments and logistics, dealer network and sales campaigns.</li>
+<li><span class="ring"></span>Next 22 years with a global software development and recruitment company spanning the US and India — 6+ years in the US on business development, account management, recruitment and operations, then 16 years in India as Country Head of Business.</li>
+<li><span class="ring"></span>6 years in the EdTech domain, spanning BridgeLabz as Head of Customer Success / Head of Lateral Business (2019–2022) and vFactor's own training and EdTech operations (2022–present) — enrollment operations, student and college counseling, career guidance seminars and orientations, and lateral hiring for tech talent.</li>
+<li><span class="ring"></span>Procured, architected and delivered offshore software projects built in Chennai, including a blood bank product, a recruitment portal and an event management platform.</li>
+<li><span class="ring"></span>Ran domestic recruitment, software development delivery, and US and Australian staffing markets simultaneously.</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="section-head" style="margin-bottom:32px;">
+<div class="eyebrow">Career highlights</div>
+<h2 style="font-size:28px;">Three decades, four defining roles</h2>
+</div>
+<div class="timeline">
+<div class="tl-item">
+<div class="yr">2022 — Present</div>
+<h4>Independent Business Consultant, vFactor Solutions</h4>
+<p>HR consulting and recruitment outsourcing; client acquisition and relationship management; IT recruitment from freshers to leadership; training and EdTech operations.</p>
+</div>
+<div class="tl-item">
+<div class="yr">2019 — 2022</div>
+<h4>Head of Customer Success / Head, Lateral Business — BridgeLabz</h4>
+<p>Led customer success and enrollment operations; new client acquisition; managed counseling and lead generation teams; ran seminars, orientations and career guidance programs; built the lateral hiring vertical.</p>
+</div>
+<div class="tl-item">
+<div class="yr">1999 — 2019</div>
+<h4>Senior Vice President, Everest Consulting Group</h4>
+<p>Led recruitment and business development across India and the US; managed offshore recruitment teams serving the US market; owned account management, software product development, operations and profitability; established processes and growth strategy across sectors.</p>
+</div>
+</div>
+<div class="earlier">
+<div class="eyebrow">Earlier career</div>
+<div class="earlier-row">
+<span>TVS Motor Company</span>
+<span>BPL Limited</span>
+<span>Arvind Fashions Limited</span>
+<span>Autolec Industries</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reviews" class="reveal">
+<div class="wrap">
+<div class="section-head">
+<div class="eyebrow">Reviews</div>
+<h2>What clients and colleagues say</h2>
+</div>
+<div class="reviews-wrap">
+<div class="review-grid">
+<div class="review-card">
+<div class="review-stars">★★★★★</div>
+<p>"It has been many years since I personally know Vijay from vFactor Solutions, who has vast experience in sourcing software engineers for clients across India and the United States. I admire his dedication and determination to add value to his work."</p>
+<div class="review-who">Antony — Project Manager and Architect, ex. Sports Mechanics</div>
+</div>
+</div>
+<div class="review-form">
+<h3>Leave a review</h3>
+<p class="hint">Worked with vFactor? Share your experience — it goes straight to Vijay's inbox for review before it's published.</p>
+<form action="https://formspree.io/f/mwleldkv" method="POST">
+<label for="rv-name">Name</label>
+<input id="rv-name" name="name" type="text" required>
+<label for="rv-org">Company (optional)</label>
+<input id="rv-org" name="company" type="text">
+<label for="rv-review">Your review</label>
+<textarea id="rv-review" name="review" required></textarea>
+<button class="btn btn-primary" type="submit">Submit review</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<section id="ats" class="reveal">
+<div class="wrap">
+<div class="section-head">
+<div class="eyebrow">Free tool</div>
+<h2>Check your resume against ATS</h2>
+<p>Upload your resume (PDF, DOCX or TXT) and optionally paste a job description for a keyword match score. Everything runs in your browser — nothing is uploaded anywhere.</p>
+</div>
+<div class="review-form" style="max-width:640px;">
+<label for="ats-file">Resume file</label>
+<input id="ats-file" type="file" accept=".pdf,.docx,.txt">
+<label for="ats-jd">Job description (optional)</label>
+<textarea id="ats-jd" placeholder="Paste the job description here for keyword matching..."></textarea>
+<button class="btn btn-primary" id="ats-run" type="button">Check my resume</button>
+<div id="ats-result" style="margin-top:22px;"></div>
+</div>
+</div>
+</section>
+<section id="contact" class="reveal">
+<div class="wrap contact-wrap">
+<div class="contact-card">
+<div class="eyebrow">Get in touch</div>
+<h3>Your next great hire starts here</h3>
+<p>Reach out directly — every engagement starts with a conversation about what precision hiring looks like for you.</p>
+<a class="clink" href="mailto:cpvijay25@gmail.com"><div><small>Email</small>cpvijay25@gmail.com</div></a>
+<a class="clink" href="tel:+919150462580"><div><small>Phone</small>+91 91504 62580</div></a>
+<a class="clink" href="https://www.linkedin.com/in/vijay-purushothaman-9503b810" target="_blank" rel="noopener"><div><small>LinkedIn</small>linkedin.com/in/vijay-purushothaman</div></a>
+</div>
+<div class="contact-side">
+<div class="eyebrow">Chennai, Tamil Nadu, India</div>
+<p>Working with clients across IT, manufacturing, banking, finance and education — in Indian and international markets.</p>
+<a class="btn btn-primary" href="mailto:cpvijay25@gmail.com">Email vFactor</a>
+</div>
+</div>
+</section>
+<div id="visit-modal" class="visit-modal">
+<div class="visit-modal-card">
+<button class="visit-close" id="visit-close" aria-label="Close">×</button>
+<div class="eyebrow">Quick question</div>
+<h3>What brings you here today?</h3>
+<p>One tap — helps us know who's stopping by.</p>
+<div class="visit-options">
+<button data-intent="Hiring talent">Hiring talent</button>
+<button data-intent="Looking for a role">Looking for a role</button>
+<button data-intent="Lead generation">Lead generation</button>
+<button data-intent="Just exploring">Just exploring</button>
+</div>
+</div>
+</div>
 <footer>
-  <div class="wrap foot-row">
-    <div>© 2026 vFactor Solutions. All rights reserved.</div>
-    <div id="visit-count-wrap"><img src="https://hits.sh/vfactorsolutions.com.svg?view=total&label=visits&extraCount=1293&color=2e5c40&labelColor=1d2422" alt="site visit count"></div>
-    <div>Recruitment · RPO · Lead Generation</div>
-  </div>
+<div class="wrap foot-row">
+<div>© 2026 vFactor Solutions. All rights reserved.</div>
+<div id="visit-count-wrap"><img src="https://hits.sh/vfactorsolutions.com.svg?view=total&label=visits&extraCount=1293&color=2e5c40&labelColor=1d2422" alt="site visit count"></div>
+<div>Recruitment · RPO · Lead Generation</div>
+</div>
 </footer>
-
 <script>
-  var els = document.querySelectorAll('.reveal');
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:.12});
-  els.forEach(function(el){ io.observe(el); });
+var els = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries){
+entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.12});
+els.forEach(function(el){ io.observe(el); });
 
-  var navLinks = document.querySelectorAll('.navlinks a');
-  var navSections = Array.prototype.map.call(navLinks, function(a){ return document.querySelector(a.getAttribute('href')); });
-  var navIo = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var idx = navSections.indexOf(e.target);
-        navLinks.forEach(function(a){ a.classList.remove('active'); });
-        if(idx > -1) navLinks[idx].classList.add('active');
-      }
-    });
-  }, {rootMargin:'-45% 0px -45% 0px'});
-  navSections.forEach(function(s){ if(s) navIo.observe(s); });
+var navLinks = document.querySelectorAll('.navlinks a');
+var navSections = Array.prototype.map.call(navLinks, function(a){ return document.querySelector(a.getAttribute('href')); });
+var navIo = new IntersectionObserver(function(entries){
+entries.forEach(function(e){
+if(e.isIntersecting){
+var idx = navSections.indexOf(e.target);
+navLinks.forEach(function(a){ a.classList.remove('active'); });
+if(idx > -1) navLinks[idx].classList.add('active');
+}
+});
+}, {rootMargin:'-45% 0px -45% 0px'});
+navSections.forEach(function(s){ if(s) navIo.observe(s); });
 
-  var toggle = document.getElementById('theme-toggle');
-  toggle.addEventListener('click', function(){
-    var current = document.documentElement.getAttribute('data-theme');
-    var next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('vfactor-theme', next);
-  });
+var toggle = document.getElementById('theme-toggle');
+toggle.addEventListener('click', function(){
+var current = document.documentElement.getAttribute('data-theme');
+var next = current === 'dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme', next);
+localStorage.setItem('vfactor-theme', next);
+});
 
-  // First-visit intent prompt + email ping (per-browser "unique", via Formspree)
-  var VISIT_KEY = 'vfactor_visited';
-  var modal = document.getElementById('visit-modal');
+// First-visit intent prompt + email ping (per-browser "unique", via Formspree)
+var VISIT_KEY = 'vfactor_visited';
+var modal = document.getElementById('visit-modal');
+function notifyNewVisitor(intent){
+fetch('https://formspree.io/f/mwleldkv', {
+method:'POST',
+headers:{'Accept':'application/json','Content-Type':'application/json'},
+body: JSON.stringify({
+message: 'New first-time visitor on the vFactor site',
+intent: intent || 'Not specified',
+page: window.location.href,
+referrer: document.referrer || 'direct',
+time: new Date().toISOString()
+})
+}).catch(function(){});
+}
+function closeModal(intent){
+modal.classList.remove('open');
+localStorage.setItem(VISIT_KEY, '1');
+notifyNewVisitor(intent);
+}
+if(!localStorage.getItem(VISIT_KEY)){
+setTimeout(function(){ modal.classList.add('open'); }, 600);
+}
+document.querySelectorAll('.visit-options button').forEach(function(btn){
+btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-intent')); });
+});
+document.getElementById('visit-close').addEventListener('click', function(){ closeModal(null); });
 
-  function notifyNewVisitor(intent){
-    fetch('https://formspree.io/f/mwleldkv', {
-      method:'POST',
-      headers:{'Accept':'application/json','Content-Type':'application/json'},
-      body: JSON.stringify({
-        message: 'New first-time visitor on the vFactor site',
-        intent: intent || 'Not specified',
-        page: window.location.href,
-        referrer: document.referrer || 'direct',
-        time: new Date().toISOString()
-      })
-    }).catch(function(){});
-  }
+// ATS resume checker
+var ATS_STOPWORDS = new Set(['the','and','for','with','you','are','this','that','will','have','has','from','your','our','job','role','team','work','able','who','using','into','over','under','years','experience','skills','required','preferred','responsibilities','requirements','about','ability','strong','including']);
 
-  function closeModal(intent){
-    modal.classList.remove('open');
-    localStorage.setItem(VISIT_KEY, '1');
-    notifyNewVisitor(intent);
-  }
+async function atsExtractText(file){
+var ext = file.name.split('.').pop().toLowerCase();
+if(ext === 'pdf'){
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+var buf = await file.arrayBuffer();
+var pdf = await pdfjsLib.getDocument({data:buf}).promise;
+var text = '';
+for(var i=1;i<=pdf.numPages;i++){
+var page = await pdf.getPage(i);
+var content = await page.getTextContent();
+text += content.items.map(function(it){return it.str;}).join(' ') + '\n';
+}
+return text;
+} else if(ext === 'docx'){
+var buf2 = await file.arrayBuffer();
+var result = await mammoth.extractRawText({arrayBuffer:buf2});
+return result.value;
+}
+return await file.text();
+}
 
-  if(!localStorage.getItem(VISIT_KEY)){
-    setTimeout(function(){ modal.classList.add('open'); }, 600);
-  }
+function atsScore(text, jdText){
+var lower = text.toLowerCase();
+var wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+var checks = [];
 
-  document.querySelectorAll('.visit-options button').forEach(function(btn){
-    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-intent')); });
-  });
-  document.getElementById('visit-close').addEventListener('click', function(){ closeModal(null); });
+var hasEmail = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(text);
+var hasPhone = /(\+?\d[\d\s-]{8,}\d)/.test(text);
+checks.push({label:'Contact info (email + phone) detected', pass: hasEmail && hasPhone, weight:15});
+
+var sections = ['experience','education','skills','summary','projects'];
+var found = sections.filter(function(s){ return lower.indexOf(s) > -1; });
+checks.push({label:'Standard sections found ('+found.length+'/5)', pass: found.length>=3, weight:20});
+
+var goodLength = wordCount>=350 && wordCount<=900;
+checks.push({label:'Resume length ('+wordCount+' words)', pass: goodLength, weight:15});
+
+var bulletCount = (text.match(/[•\-\*]\s/g)||[]).length;
+checks.push({label:'Bullet points used ('+bulletCount+')', pass: bulletCount>=5, weight:10});
+
+var verbs = ['led','managed','built','developed','designed','implemented','improved','created','launched','automated','optimized','reduced','increased','delivered'];
+var verbHits = verbs.filter(function(v){ return lower.indexOf(v) > -1; }).length;
+checks.push({label:'Action verbs used ('+verbHits+'/'+verbs.length+')', pass: verbHits>=5, weight:15});
+
+if(jdText && jdText.trim().length>20){
+var jdWords = Array.from(new Set((jdText.toLowerCase().match(/[a-z][a-z+.#]{2,}/g)||[])))
+.filter(function(w){ return !ATS_STOPWORDS.has(w); });
+var matched = jdWords.filter(function(w){ return lower.indexOf(w) > -1; });
+var pct = jdWords.length ? Math.round(matched.length/jdWords.length*100) : 0;
+checks.push({label:'Keyword match vs job description ('+pct+'%)', pass: pct>=50, weight:25});
+} else {
+checks.push({label:'No job description provided — add one for keyword matching', pass:false, weight:0});
+}
+
+var totalWeight = checks.reduce(function(a,c){ return a+c.weight; },0) || 1;
+var score = Math.round(checks.reduce(function(a,c){ return a + (c.pass? c.weight:0); },0) / totalWeight * 100);
+return {score:score, checks:checks};
+}
+
+document.getElementById('ats-run').addEventListener('click', async function(){
+var fileInput = document.getElementById('ats-file');
+var jd = document.getElementById('ats-jd').value;
+var out = document.getElementById('ats-result');
+if(!fileInput.files.length){ out.innerHTML = '<p style="color:var(--signal);">Upload a resume file first.</p>'; return; }
+out.innerHTML = '<p style="color:var(--ink-soft);">Analyzing…</p>';
+try{
+var text = await atsExtractText(fileInput.files[0]);
+var result = atsScore(text, jd);
+var color = result.score>=75 ? 'var(--field)' : result.score>=50 ? 'var(--star)' : 'var(--signal)';
+var html = '<div class="ats-score" style="color:'+color+';">'+result.score+'<span style="font-size:18px;color:var(--ink-soft);">/100</span></div>';
+html += '<ul class="ats-check-list">';
+result.checks.forEach(function(c){
+var icon = c.pass ? '✓' : '✕';
+var col = c.pass ? 'var(--field-deep)' : 'var(--signal)';
+html += '<li><span class="mark" style="color:'+col+';">'+icon+'</span> '+c.label+'</li>';
+});
+html += '</ul>';
+out.innerHTML = html;
+} catch(err){
+out.innerHTML = '<p style="color:var(--signal);">Could not read that file. Try a PDF, DOCX or TXT.</p>';
+}
+});
 </script>
 <script data-goatcounter="https://cpvijay25.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
