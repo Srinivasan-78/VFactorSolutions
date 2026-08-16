@@ -3,39 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page not found — vFactor Solutions</title>
-<meta name="robots" content="noindex">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232E5C40'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='18' fill='white' text-anchor='middle'%3Ev%3C/text%3E%3C/svg%3E">
+<title>Page not found | vFactor Solutions</title>
+<meta name="robots" content="noindex, follow">
 <script>
-(function(){
-var saved = localStorage.getItem('vfactor-theme');
-var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-document.documentElement.setAttribute('data-theme', theme);
-})();
+  (function(){
+    var saved;
+    try { saved = localStorage.getItem('vfactor-theme'); } catch(e) {}
+    document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  })();
 </script>
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-.notfound{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px;}
-.notfound .eyebrow{margin-bottom:14px;}
-.notfound h1{font-size:64px;margin-bottom:14px;}
-.notfound p{color:var(--ink-soft);font-size:16px;margin-bottom:28px;max-width:44ch;}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <header>
-<div class="nav">
-<div class="brand">vFactor<span>.</span></div>
-<nav class="navlinks"><a href="index.html">Home</a></nav>
-</div>
+  <div class="nav">
+    <a class="brand" href="/" aria-label="vFactor Solutions home">vFactor<span>.</span></a>
+  </div>
 </header>
-<div class="notfound">
-<div class="eyebrow">404</div>
-<h1>Page not found</h1>
-<p>The page you're looking for doesn't exist or has moved.</p>
-<a class="btn btn-primary" href="index.html">Back to vFactor Solutions</a>
-</div>
+
+<main class="wrap center">
+  <p class="eyebrow">404</p>
+  <h1>This page isn't here.</h1>
+  <p style="color:var(--ink-soft);max-width:44ch;">The link may be old or mistyped. Everything on the site lives on one page — start there, or get in touch directly.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a class="btn btn-primary" href="/">Back to the site</a>
+    <a class="btn btn-ghost" href="mailto:vijay@vfactorsolutions.com">Email vFactor</a>
+  </div>
+</main>
 </body>
 </html>

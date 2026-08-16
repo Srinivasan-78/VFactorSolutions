@@ -3,62 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — vFactor Solutions</title>
-<meta name="description" content="How vFactor Solutions handles data submitted through this site.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232E5C40'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='18' fill='white' text-anchor='middle'%3Ev%3C/text%3E%3C/svg%3E">
+<title>Privacy notice | vFactor Solutions</title>
+<meta name="description" content="How vFactor Solutions collects, uses, stores and deletes the personal information submitted through this website.">
+<link rel="canonical" href="https://vfactorsolutions.com/privacy.html">
+<meta name="robots" content="index, follow">
 <script>
-(function(){
-var saved = localStorage.getItem('vfactor-theme');
-var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-document.documentElement.setAttribute('data-theme', theme);
-})();
+  (function(){
+    var saved;
+    try { saved = localStorage.getItem('vfactor-theme'); } catch(e) {}
+    document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  })();
 </script>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-.policy{max-width:760px;margin:0 auto;padding:80px 32px;}
-.policy h1{font-size:34px;margin-bottom:24px;}
-.policy h2{font-size:20px;margin:32px 0 12px;}
-.policy p,.policy li{color:var(--ink-soft);font-size:15.5px;line-height:1.7;}
-.policy ul{padding-left:20px;margin-top:8px;}
-.policy a{color:var(--field-deep);text-decoration:underline;}
-.policy .back{display:inline-block;margin-top:32px;font-size:14px;}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+
 <header>
-<div class="nav">
-<div class="brand">vFactor<span>.</span></div>
-<nav class="navlinks"><a href="index.html">Home</a></nav>
-</div>
+  <div class="nav">
+    <a class="brand" href="/" aria-label="vFactor Solutions home">vFactor<span>.</span></a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="/#services">Services</a>
+      <a href="/#process">How we work</a>
+      <a href="/#founder">Founder</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
 </header>
-<main class="policy">
-<div class="eyebrow">Privacy</div>
-<h1>Privacy Policy</h1>
-<p>This page explains what data this site collects and how it's used. Last updated 2026.</p>
 
-<h2>Forms (contact, review)</h2>
-<p>The contact and review forms on this site send the information you type (name, email, company, and your message) to vFactor Solutions via Formspree, a third-party form-delivery service, so it can reach our inbox. We only use it to respond to you or, for reviews, to consider publishing what you submitted.</p>
+<main id="main">
+<div class="wrap doc">
+  <!-- TODO: update this date whenever you change the notice. -->
+  <p class="updated">Last updated 16 August 2026</p>
+  <h1>Privacy notice</h1>
+  <p>This notice explains what personal information vFactor Solutions collects through this website, why we collect it, how long we keep it, and how you can have it removed.</p>
 
-<h2>Resume ATS checker</h2>
-<p>The resume checker tool runs entirely in your browser. Your resume file is parsed locally and is never uploaded to any server. If you choose to click "Email this resume for open roles," it opens your own email app with a pre-filled message — nothing is sent automatically, and you choose whether to attach and send it.</p>
+  <h2>Who we are</h2>
+  <!-- TODO: replace with the registered entity name and address. -->
+  <p>vFactor Solutions, Chennai, Tamil Nadu, India. For any question about this notice or your data, contact <a href="mailto:vijay@vfactorsolutions.com">vijay@vfactorsolutions.com</a>.</p>
 
-<h2>Analytics</h2>
-<p>We use GoatCounter, a privacy-friendly analytics service that does not use cookies and only records aggregate, anonymized visit counts.</p>
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Candidate submissions.</strong> Name, email address, phone number, current role and experience, links you provide, and anything you write in the notes field. If you email a CV, we hold the CV as well.</li>
+    <li><strong>Reviews.</strong> Name, email address, company name if given, and the review text.</li>
+    <li><strong>Client enquiries.</strong> Whatever you include when you email or call us.</li>
+    <li><strong>Anonymous usage statistics.</strong> Page views, referring site and country, collected by GoatCounter. No cookies are set and no individual is identified.</li>
+  </ul>
+  <p>We do not use advertising trackers, and we do not sell or rent personal information to anyone.</p>
 
-<h2>What we don't do</h2>
-<ul>
-<li>We don't sell or share your data with advertisers.</li>
-<li>We don't track you across other websites.</li>
-<li>We don't store resume content anywhere — it stays in your browser session.</li>
-</ul>
+  <h2>Why we use it</h2>
+  <ul>
+    <li>To assess whether you are a fit for a role we are working on, and to contact you about it.</li>
+    <li>To respond to a client enquiry and deliver the service agreed.</li>
+    <li>To publish a review, and only when you have ticked the consent box or told us in writing that we may.</li>
+    <li>To understand which pages of the site are useful, in aggregate.</li>
+  </ul>
 
-<h2>Contact</h2>
-<p>Questions about this policy or a request to delete data you've submitted: email <a href="mailto:cpvijay25@gmail.com">cpvijay25@gmail.com</a>.</p>
+  <h2>Who we share it with</h2>
+  <p>A candidate profile is shared with a prospective employer only after you have agreed to that specific role. Form submissions are delivered to us through Formspree, our form processor, and email is handled by our email provider; both hold data on our behalf and are not permitted to use it for their own purposes.</p>
 
-<a class="back" href="index.html">&larr; Back to vFactor Solutions</a>
+  <h2>How long we keep it</h2>
+  <!-- TODO: set a retention period you will actually honour, then state it. -->
+  <p>Candidate details are kept while they are relevant to live or upcoming searches, and are reviewed periodically. Client correspondence is kept for the duration of the engagement and any statutory record-keeping period that applies. Ask us to delete your data sooner and we will.</p>
+
+  <h2>Your choices</h2>
+  <p>You may ask us at any time to send you a copy of what we hold about you, correct it, stop using it, or delete it entirely. Email <a href="mailto:vijay@vfactorsolutions.com">vijay@vfactorsolutions.com</a> and we will act within 30 days. Withdrawing consent for a published review will have it taken down.</p>
+
+  <h2>Cookies</h2>
+  <p>This site sets no advertising or tracking cookies. Your light or dark theme preference is stored locally in your own browser and never sent to us.</p>
+
+  <h2>Changes</h2>
+  <p>If this notice changes, the date at the top of this page changes with it.</p>
+
+  <p style="margin-top:32px;"><a class="btn btn-ghost" href="/">Back to the site</a></p>
+</div>
 </main>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>© <span id="year">2026</span> vFactor Solutions. All rights reserved.</div>
+    <div><a href="/#contact">Contact</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>
