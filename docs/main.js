@@ -97,6 +97,12 @@
       var trap = form.querySelector('input[name="_gotcha"]');
       if (trap && trap.value) return;
 
+      // accept linkedin.com/in/name as well as a full URL
+      var url = form.querySelector('input[name="links"]');
+      if (url && url.value.trim() && !/^https?:\/\//i.test(url.value.trim())) {
+        url.value = 'https://' + url.value.trim();
+      }
+
       if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
       if (button) { button.disabled = true; button.textContent = 'Sending…'; }
 

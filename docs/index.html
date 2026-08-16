@@ -1041,7 +1041,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 32px;}
         <input id="cd-role" name="current_role" type="text" placeholder="e.g. DevOps Engineer, 5 years" required>
 
         <label for="cd-links">LinkedIn or portfolio link</label>
-        <input id="cd-links" name="links" type="url" inputmode="url" placeholder="https://">
+        <input id="cd-links" name="links" type="text" inputmode="url" placeholder="linkedin.com/in/yourname">
 
         <label for="cd-notes">What are you looking for?</label>
         <textarea id="cd-notes" name="notes"></textarea>
@@ -1223,6 +1223,12 @@ footer{border-top:1px solid var(--line);padding:40px 0 32px;}
       // honeypot: bots fill hidden fields, people don't
       var trap = form.querySelector('input[name="_gotcha"]');
       if (trap && trap.value) return;
+
+      // accept linkedin.com/in/name as well as a full URL
+      var url = form.querySelector('input[name="links"]');
+      if (url && url.value.trim() && !/^https?:\/\//i.test(url.value.trim())) {
+        url.value = 'https://' + url.value.trim();
+      }
 
       if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
       if (button) { button.disabled = true; button.textContent = 'Sending…'; }
